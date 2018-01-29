@@ -1,0 +1,31 @@
+App.contracts.Meme.deployed().then(function(instance) {memeInstance = instance;})
+
+memeInstance.createContractMeme('Are You Kidding Me')
+
+memeInstance.createContractMeme('Bitch Please')
+
+memeInstance.createContractMeme('Computer Reaction')
+
+memeInstance.createContractMeme('Forever Alone')
+
+memeInstance.createContractMeme('Fuck You')
+
+memeInstance.createContractMeme('Fuck Yea')
+
+memeInstance.createContractMeme('I Know That Feel Bro')
+
+memeInstance.createContractMeme('LOL Guy')
+
+memeInstance.createContractMeme('Mother Of God')
+
+memeInstance.createContractMeme('Not Bad')
+
+memeInstance.createContractMeme('OMG')
+
+memeInstance.createContractMeme('Poker Face')
+
+memeInstance.createContractMeme('Troll Face')
+
+memeInstance.createContractMeme('True Story')
+
+memeInstance.createContractMeme('Me Angry')

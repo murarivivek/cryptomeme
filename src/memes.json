@@ -1,0 +1,77 @@
+[
+  {
+    "id": 0,
+    "name": "Are You Kidding Me",
+    "picture": "images/are-you-kidding-me.jpeg"
+  },
+  {
+    "id": 1,
+    "name": "Bitch Please",
+    "picture": "images/bitch-please.jpeg"
+  },
+  {
+    "id": 2,
+    "name": "Computer Reaction",
+    "picture": "images/computer-reaction.jpeg"
+  },
+  {
+    "id": 3,
+    "name": "Forever Alone",
+    "picture": "images/forever-alone.jpeg"
+  },
+  {
+    "id": 4,
+    "name": "Fuck You",
+    "picture": "images/fu.jpeg"
+  },
+  {
+    "id": 5,
+    "name": "Fuck Yea",
+    "picture": "images/fuck-yea.jpeg"
+  },
+  {
+    "id": 6,
+    "name": "I Know That Feel Bro",
+    "picture": "images/i-know-that-feel-bro.jpeg"
+  },
+  {
+    "id": 7,
+    "name": "LOL Guy",
+    "picture": "images/lol-guy.jpeg"
+  },
+  {
+    "id": 8,
+    "name": "Mother Of God",
+    "picture": "images/mother-of-god.jpeg"
+  },
+  {
+    "id": 9,
+    "name": "Not Bad",
+    "picture": "images/not-bad.jpeg"
+  },
+  {
+    "id": 10,
+    "name": "OMG",
+    "picture": "images/omg.jpeg"
+  },
+  {
+    "id": 11,
+    "name": "Poker Face",
+    "picture": "images/poker-face.jpeg"
+  },
+  {
+    "id": 12,
+    "name": "Troll Face",
+    "picture": "images/troll-face.jpeg"
+  },
+  {
+    "id": 13,
+    "name": "True Story",
+    "picture": "images/true-story.jpeg"
+  },
+  {
+    "id": 14,
+    "name": "Me Angry",
+    "picture": "images/me-angry.jpeg"
+  }
+]
