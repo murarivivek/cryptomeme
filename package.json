@@ -1,5 +1,5 @@
 {
-  "name": "pet-shop",
+  "name": "cryptomeme",
   "version": "1.0.0",
   "description": "",
   "main": "truffle.js",
@@ -7,12 +7,16 @@
     "test": "test"
   },
   "scripts": {
-    "dev": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "lite-server": "^2.3.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "mysql": "^2.15.0"
   }
 }
