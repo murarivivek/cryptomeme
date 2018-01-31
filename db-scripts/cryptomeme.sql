@@ -24,7 +24,6 @@ CREATE TABLE `meme` (
 
 
 CREATE TABLE `user` (
-  `id` bigint(20) NOT NULL,
   `wallet_address` varchar(255) NOT NULL,
   `username` varchar(1023) NOT NULL,
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -32,26 +31,25 @@ CREATE TABLE `user` (
   `last_modified_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_modified_user` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username_UNIQUE` (`username`),
-  UNIQUE KEY `wallet_address_UNIQUE` (`wallet_address`)
+  PRIMARY KEY (`wallet_address`),
+  UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
 CREATE TABLE `meme_ownership` (
   `meme_id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
+  `wallet_address` bigint(20) NOT NULL,
   `price` decimal(50, 6) NOT NULL,
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user` varchar(255) NOT NULL,
   `last_modified_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_modified_user` varchar(255) NOT NULL,
   PRIMARY KEY (`meme_id`),
-  KEY `user_fk_idx` (`user_id`),
+  KEY `user_fk_idx` (`wallet_address`),
   KEY `price_idx` (`price`),
   CONSTRAINT `meme_id_fk` FOREIGN KEY (`meme_id`) REFERENCES `meme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `wallet_address_fk` FOREIGN KEY (`wallet_address`) REFERENCES `user` (`wallet_address`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
