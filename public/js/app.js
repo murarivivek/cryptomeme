@@ -4,15 +4,25 @@ App = {
 
   init: function() {
     // Load memes.
-    $.getJSON('../memes.json', function(data) {
+    var url = '/memes';
+
+    if(window.location.pathname.startsWith('/user/')){
+      url = '/usermemes/'+window.location.pathname.substring('/user/'.length);
+    }else if(window.location.pathname!='/'){
+      window.location = '/';
+    }
+    $.getJSON(url, function(data) {
       var petsRow = $('#petsRow');
       var petTemplate = $('#petTemplate');
-
+      if(data.length==0){
+        window.location = '/';
+      }
       for (i = 0; i < data.length; i ++) {
         petTemplate.find('.panel-title').text(data[i].name);
         petTemplate.find('img').attr('src', data[i].image_url);
-        petTemplate.find('.pet-breed').text(data[i].breed);
-        petTemplate.find('.pet-age').text(data[i].age);
+        var ownerDisplay = data[i].username.length>20?data[i].username.substring(0,20)+'...':data[i].username;
+        petTemplate.find('.pet-breed').html('<a href="/user/'+data[i].username+'">'+ownerDisplay+'</a>');
+        petTemplate.find('.pet-age').text(data[i].price);
         petTemplate.find('.pet-location').text(data[i].location);
         petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
 
@@ -79,12 +89,6 @@ App = {
         for(i=0;i<tokenIds.length;i++){
           var doc = $('.panel-pet').eq(i);
           doc.find('.pet-age').text(web3.fromWei(meme[i], "ether").toNumber());
-        }
-      });
-      memeInstance.getMemeOwners(tokenIds).then(function(meme){
-        for(i=0;i<tokenIds.length;i++){
-          var doc = $('.panel-pet').eq(i);
-          doc.find('.pet-breed').text(meme[i]);
         }
       });
 
