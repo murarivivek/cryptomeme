@@ -1,0 +1,17 @@
+{
+  "name": "db-cron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cron.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "mysql": "^2.15.0",
+    "node-cron": "^1.2.1",
+    "truffle-contract": "^3.0.2"
+  }
+}

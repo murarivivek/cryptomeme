@@ -12,6 +12,7 @@ CREATE TABLE `meme` (
   `name` varchar(255) NOT NULL,
   `description` varchar(1023) DEFAULT NULL,
   `image_url` varchar(1023) DEFAULT NULL,
+  `base_price` decimal(50, 30) NOT NULL DEFAULT 0.001,
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user` varchar(255) NOT NULL,
   `last_modified_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -40,7 +41,7 @@ CREATE TABLE `user` (
 CREATE TABLE `meme_ownership` (
   `meme_id` bigint(20) NOT NULL,
   `wallet_address` varchar(255) NOT NULL,
-  `price` decimal(50, 6) NOT NULL,
+  `price` decimal(50, 30) NOT NULL,
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user` varchar(255) NOT NULL,
   `last_modified_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
