@@ -14,9 +14,6 @@ App = {
     $.getJSON(url, function(data) {
       var petsRow = $('#petsRow');
       var petTemplate = $('#petTemplate');
-      if(data.length==0){
-        window.location = '/';
-      }
       for (i = 0; i < data.length; i ++) {
         petTemplate.find('.panel-title').text(data[i].name);
         petTemplate.find('img').attr('src', data[i].image_url);
