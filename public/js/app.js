@@ -88,7 +88,8 @@ App = {
       memeInstance.getMemeSellingPrices(tokenIds).then(function(meme){
         for(i=0;i<tokenIds.length;i++){
           var doc = $('.panel-pet').eq(i);
-          doc.find('.pet-age').text(web3.fromWei(meme[i], "ether").toNumber());
+          val = (Number(val) + 0.0000005).toFixed(6);
+          doc.find('.pet-age').text(web3.fromWei(val, "ether").toNumber());
         }
       });
 
