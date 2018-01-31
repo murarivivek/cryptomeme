@@ -88,8 +88,8 @@ App = {
       memeInstance.getMemeSellingPrices(tokenIds).then(function(meme){
         for(i=0;i<tokenIds.length;i++){
           var doc = $('.panel-pet').eq(i);
-          val = (Number(web3.fromWei(meme[i], "ether").toNumber()) + 0.0000005).toFixed(6);
-          doc.find('.pet-age').text(web3.fromWei(val, "ether").toNumber());
+          val = (Number(web3.fromWei(meme[i], "ether").toNumber()) + 0.00000049).toFixed(6);
+          doc.find('.pet-age').text(val);
         }
       });
 
@@ -115,7 +115,7 @@ App = {
         memeInstance = instance;
         var val = $('.panel-pet').eq(petId).find('.pet-age').text();
         // Execute adopt as a transaction by sending account
-        val = (Number(val) + 0.0000005).toFixed(6);
+        val = (Number(val) + 0.00000049).toFixed(6);
         return memeInstance.purchase(petId, {value: web3.toWei(new web3.BigNumber(val), "ether")});
       }).then(function(result) {
         return App.markAdopted();
