@@ -39,7 +39,7 @@ CREATE TABLE `user` (
 
 CREATE TABLE `meme_ownership` (
   `meme_id` bigint(20) NOT NULL,
-  `wallet_address` bigint(20) NOT NULL,
+  `wallet_address` varchar(255) NOT NULL,
   `price` decimal(50, 6) NOT NULL,
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user` varchar(255) NOT NULL,
@@ -57,8 +57,8 @@ CREATE TABLE `meme_ownership` (
 /*
 
 insert into meme (id, name, description, image_url, created_user, last_modified_user) values (0, 'Are You Kidding Me', '', 'images/are-you-kidding-me.jpeg','','');
-insert into user (id, wallet_address, username, created_user, last_modified_user) values (0, '0x7ec1b0c977dfc18d3d0075fac0778f9799c8ff0b', 'pramod','','');
-insert into meme_ownership (meme_id, user_id, price, created_user, last_modified_user) values (0,0,0.0001,'','');
+insert into user (wallet_address, username, created_user, last_modified_user) values ('0x7ec1b0c977dfc18d3d0075fac0778f9799c8ff0b', 'pramod','','');
+insert into meme_ownership (meme_id, wallet_address, price, created_user, last_modified_user) values (0,0,0.0001,'','');
 select * from meme;
 select * from user;
 select * from meme_ownership;
