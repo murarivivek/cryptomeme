@@ -22,9 +22,26 @@ app.listen(3000, function () {
 
 app.get('/memes', function(req, res){
 
- 
-	MemeModel.getAllMemes(function(err,rows){
-	 
+ 	pageNum = req.body.page;
+ 	sortBy = req.body.sort;
+ 	sortOrder = req.body.sortOrder;
+ 	searchTerm = req.body.search;
+ 	if(sortBy == undefined){
+ 		sortBy = 'created';
+ 	}
+ 	
+ 	if(sortOrder == 'asc'){
+ 		sortOrder = 'asc';
+ 	}else{
+ 		sortOrder = 'desc';
+ 	}
+ 	if(pageNum == undefined){
+ 		pageNum = 0;
+ 	}
+
+
+	MemeModel.getAllMemes(pageNum, 20, sortBy, sortOrder, searchTerm,function(err,rows){
+	 	
 		if(err)
 		{
 	  		res.json(err);
