@@ -12,18 +12,27 @@ App = {
       window.location = '/';
     }
     $.getJSON(url, function(data) {
-      var petsRow = $('#petsRow');
-      var petTemplate = $('#petTemplate');
-      for (i = 0; i < data.length; i ++) {
-        petTemplate.find('.panel-title').text(data[i].name);
-        petTemplate.find('img').attr('src', data[i].image_url);
-        var ownerDisplay = data[i].username.length>20?data[i].username.substring(0,20)+'...':data[i].username;
-        petTemplate.find('.pet-breed').html('<a href="/user/'+data[i].username+'">'+ownerDisplay+'</a>');
-        petTemplate.find('.pet-age').text(data[i].price);
-        petTemplate.find('.pet-location').text(data[i].location);
-        petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
 
-        petsRow.append(petTemplate.html());
+      var petsRow = $('#memeRow');
+      var memeTemplate = $('#memeTemplate');
+      
+      for (i = 0; i < data.length; i ++) {
+        memeTemplate.find('.card-title').text(data[i].name);
+        memeTemplate.find('.movie-header').css({
+  "background": "url("+data[i].image_url+")",
+  "background-size": "contain",
+  "background-repeat":"no-repeat",
+  "background-position": "center"
+});
+        memeTemplate.find('img').attr('src', data[i].image_url);
+        var ownerDisplay = data[i].username.length>20?data[i].username.substring(0,20)+'...':data[i].username;
+        memeTemplate.find('.owner').html('<a href="/user/'+data[i].username+'">'+ownerDisplay+'</a>');
+        var price = (data[i].price+ 0.00000049).toFixed(6);
+        memeTemplate.find('.price').text(price);
+        memeTemplate.find('.pet-location').text(data[i].location);
+        memeTemplate.find('.btn-buy').attr('data-id', data[i].id);
+
+        petsRow.append(memeTemplate.html());
       }
     });
 
@@ -72,7 +81,7 @@ App = {
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn-adopt', App.handleAdopt);
+    $(document).on('click', '.btn-buy', App.handleAdopt);
   },
 
   markAdopted: function(adopters, account) {
@@ -81,12 +90,14 @@ App = {
     App.contracts.Meme.deployed().then(function(instance) {
       memeInstance = instance;
       var tokenIds = [];
-      $('.btn-adopt').each(function(index, ele){tokenIds[index] = parseInt(ele.getAttribute('data-id'))});
+      $('.btn-buy').each(function(index, ele){tokenIds[index] = parseInt(ele.getAttribute('data-id'))});
       memeInstance.getMemeSellingPrices(tokenIds).then(function(meme){
         for(i=0;i<tokenIds.length;i++){
-          var doc = $('.panel-pet').eq(i);
+          var doc = $('.movie-card').eq(i);
           val = (Number(web3.fromWei(meme[i], "ether").toNumber()) + 0.00000049).toFixed(6);
-          doc.find('.pet-age').text(val);
+          trueval = Number(web3.fromWei(meme[i], "ether").toNumber());
+          doc.find('.price').text(val);
+          doc.find('.price').attr('data-trueval',trueval);
         }
       });
 
@@ -98,7 +109,7 @@ App = {
   handleAdopt: function(event) {
     event.preventDefault();
 
-    var petId = parseInt($(event.target).data('id'));
+    var petId = parseInt($(event.target).attr('data-id'));
     var memeInstance;
 
     web3.eth.getAccounts(function(error, accounts) {
@@ -110,7 +121,7 @@ App = {
 
       App.contracts.Meme.deployed().then(function(instance) {
         memeInstance = instance;
-        var val = $('.panel-pet').eq(petId).find('.pet-age').text();
+        var val = $('.movie-card').eq(petId).find('.price').attr('data-trueval');
         // Execute adopt as a transaction by sending account
         val = (Number(val) + 0.00000049).toFixed(6);
         return memeInstance.purchase(petId, {value: web3.toWei(new web3.BigNumber(val), "ether")});

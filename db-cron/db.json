@@ -2,6 +2,6 @@
   "connectionLimit" : 5,
   "host"     		: "localhost",
   "user"     		: "root",
-  "password" 		: "root",
+  "password" 		: "",
   "database" 		: "cryptomeme"
 }

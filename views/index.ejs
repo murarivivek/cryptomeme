@@ -1,14 +1,19 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/images/favicon.ico">
+
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Crypto Meme Shop</title>
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,41 +23,180 @@
     <![endif]-->
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">Crypto Meme Shop</h1>
-          <hr/>
-          <br/>
-        </div>
-        <div class="col-xs-25 col-sm-1 col-sm-push-1">
-          <h5 class="text-center" id="loggedin">test</h4>
+
+     <header>
+      <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+              <h4 class="text-white">WTF is a cryptomeme?</h4>
+              <p class="text-white">Well, all you Forever Alone Nerds, you can now own a Wojak or a Pepe or 100+ other memes. And it is on Blockchain. Secured by a Contract. That means Lambos. Hodl!!!!!!! We going to the Moon!</p>
+            </div>
+            <div class="col-sm-4 offset-md-1 py-4">
+              <h4 class="text-white">Contact</h4>
+              <ul class="list-unstyled">
+                <li><a href="#" class="text-white">Follow on Twitter</a></li>
+                <li><a href="#" class="text-white">Like on Facebook</a></li>
+                <li><a href="#" class="text-white">Email Us</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="navbar navbar-dark bg-dark box-shadow navbar-gradient">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            
+            <strong>( ͡° ͜ʖ ͡°) CRYPTO MEME</strong>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+    </header>
 
-      <div id="petsRow" class="row">
+ 
+    <main role="main">
+
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Memes Memes Everywhere</h1>
+          <p class="lead text-muted">Memes are precious. They are special. Y U NO Own them? </p>
+          <!--p>
+            <a href="#" class="btn btn-primary my-2">Main call to action</a>
+            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+          </p-->
+        </div>
+      </section>
+
+      <div class="album py-5 bg-light">
+
+<div class="container">
+      <div id="memeRow" class="row ">
         <!-- PETS LOAD HERE -->
       </div>
-    </div>
+      
 
-    <div id="petTemplate" style="display: none;">
-      <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="panel panel-default panel-pet">
-          <div class="panel-heading">
-            <h3 class="panel-title">Scrappy</h3>
+    <div id="memeTemplate" style="display: none;">
+      
+    <div id="meme-item" class="col-3 rounded-circle"  >
+      <div class="movie-card"><div class="movie-content-header text-center">
+
+            <h3 class="card-title movie-title">Creative</h3>
+
           </div>
-          <div class="panel-body">
-            <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
-            <br/><br/>
-            <strong>Owner</strong>: <span class="pet-breed">Not Available</span><br/>
-            <strong>Price</strong>: <span class="pet-age">0</span><br/>
-            <!-- <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br/><br/> -->
-            <button class="btn btn-default btn-adopt" type="button" data-id="0">Buy Meme</button>
+        <div class=" movie-header"></div>
+            <!--img class="card-img-top" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" alt=""-->
+                <div class="movie-content">
+      
+                  <div class="movie-info">
+
+                    <div class="info-section">
+                                    <label>OWNER</label>  <span class="owner">ME</span></p>
+                                  </div>
+
+                    <div class="info-section">
+                                    <label>Price</label>  <span class="price">ME</span></p>
+                                  </div>
+                  </div>
+                  
+                      
+                                                      <div class="buy-button">
+
+                        <button class="btn  btn-primary btn-block btn-buy" type="button" data-id="0">Own the Meme</a></button><div>
+
+                  </div>
+
           </div>
         </div>
       </div>
     </div>
 
+
+</div>
+
+
+
+  
+</div>
+
+  <div class="container" id="footer-container-fluid">
+        <div class="container">
+          <!---- for footer container ---->
+          <div class="row">
+                <div class="col-lg-2  col-md-6 col-sm-12 col-xs-12">
+                  <ul>
+                    <li class="title"> Product  </li>
+                    <li> <a href="#"> How It Works? </a> </li>
+                    <li> <a href="#"> Contact Us </a> </li>
+                    <li> <a href="#"> FAQ's </a> </li>
+                    <li> <a href="#"> Privacy Policy </a> </li>
+                    <li> <a href="#"> Terms of Service </a> </li>
+                  </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12 col-xs-12">
+                   
+                  <ul>
+                    <li class="title"> SDk's  </li>
+                    <li> <a href="#"> My Account </a> </li>
+                    <li> <a href="#"> Contract Link </a> </li>
+                  </ul>
+                </div>
+                <div class="col-lg-2  col-md-6 col-sm-12 col-xs-12">
+                  <ul>
+                  <li class="title"> Documentation </li>
+                    <li> <a href="#"> Learn API </a> </li>
+                    <li> <a href="#"> API version </a> </li>
+                    <li> <a href="#"> APi methods </a> </li>
+                    <li> <a href="#"> Data Types </a> </li>
+                  </ul>
+                  <ul>
+                    <li class="title"> Licenses </li>
+                    <li> <a href="#"> Bootsnip </a> </li>
+                    <li> <a href="#"> Boostrap 4.0</a> </li>
+                    <li> <a href="#"> Github </a> </li>
+                    <li> <a href="#"> Font Awesome.io 5 </a> </li>
+                  </ul> 
+                </div>
+                <div class="col-lg-2  col-md-6 col-sm-12 col-xs-12">
+                  <ul>
+                    <li class="title"> Find us on </li><br>
+                    <li> <a href="#"><button class="w3-button w3-circle w3-light-grey"> <i class="fa fa-facebook" aria-hidden="true"></i> </button></a> </li><br>
+                    <li> <a href="#"><button class="w3-button w3-circle w3-light-grey"> <i class="fa fa-twitter" aria-hidden="true"></i></button></a> </li><br>
+                    <li> <a href="#"><button class="w3-button w3-circle w3-light-grey"> <i class="fa fa-linkedin" aria-hidden="true"></i> </button></a> </li><br>
+ 
+                  </ul> 
+                  
+                </div>
+                <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                  <ul>                    
+                  <li class="address"> +(63) 2452 82763</li> 
+                  <li class="address"> @profinder.com.ph </li> 
+                  <li class="address"> profinder@gmail.com </li> 
+                  </ul> 
+                  <ul>                    
+                  <li class="address"> 3rd Block Makati, #403</li> 
+                  <li class="address"> Phillippines </li> 
+                  <li class="address"> Delware 1899 </li> 
+                  </ul> 
+                  <hr>
+                  </div>
+              </div>
+        </div>
+        
+        
+        
+      </div>
+      
+          <div class="container-fluid" id="sub-footer-container-fluid">
+        <footer class="text-center">
+      <!-- Copyright removal is not prohibited! -->
+      <p class="mb-2"><small>COPYRIGHT © 2018. ALL RIGHTS RESERVED.</small></p>
+
+      <!-- Copyright removal is not prohibited! -->
+      </footer>
+      </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
