@@ -18,14 +18,19 @@ App = {
       
       for (i = 0; i < data.length; i ++) {
         memeTemplate.find('.card-title').text(data[i].name);
-        memeTemplate.find('.movie-header').css({
+     /*   memeTemplate.find('.movie-header').css({
   "background": "url("+data[i].image_url+")",
   "background-size": "contain",
   "background-repeat":"no-repeat",
-  "background-position": "center"
-});
+  "background-position": "center",
+  "border-radius": "10px"
+});*/
         memeTemplate.find('img').attr('src', data[i].image_url);
-        var ownerDisplay = data[i].username.length>20?data[i].username.substring(0,20)+'...':data[i].username;
+        if(data[i].username){
+                  var ownerDisplay = data[i].username.length>20?data[i].username.substring(0,20)+'...':data[i].username;
+                }else{
+                  ownerDisplay = "NoOwner";
+                }
         memeTemplate.find('.owner').html('<a href="/user/'+data[i].username+'">'+ownerDisplay+'</a>');
         var price = (data[i].price+ 0.00000049).toFixed(6);
         memeTemplate.find('.price').text(price);
