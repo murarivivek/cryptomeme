@@ -131,7 +131,7 @@ function getLastBlockNumber(memePrices, successCallBack, errorCallBack){
 
 
 function getLastBlockNumberSuccess(memePrices, lastBlockNumber){
-    getTransferEvents(memePrices, lastBlockNumber, getTransferEventsSuccess, getTransferEventsError);
+    getCurrentBlockNumber(memePrices, lastBlockNumber, getCurrentBlockNumberSuccess, getCurrentBlockNumberError);
 }
 
 function getLastBlockNumberError(err){
@@ -140,15 +140,36 @@ function getLastBlockNumberError(err){
 }
 
 
+// Gets current block number
+function getCurrentBlockNumber(memePrices, lastBlockNumber, successCallBack, errorCallBack){
+    web3.eth.getBlockNumber(function(error, newBlockNumber){
+      if(error){
+        errorCallBack(error);
+      } else {
+        successCallBack(memePrices, lastBlockNumber, newBlockNumber);
+      }
+    });
+}
+
+
+function getCurrentBlockNumberSuccess(memePrices, lastBlockNumber, newBlockNumber){
+    getTransferEvents(memePrices, lastBlockNumber, newBlockNumber, getTransferEventsSuccess, getTransferEventsError);
+}
+
+function getCurrentBlockNumberError(err){
+  console.log("****** getCurrentBlockNumberSuccess : " + new Date());
+  console.log(err);
+}
+
+
 // get Transfer events from last processed block till latest
-function getTransferEvents(memePrices, lastBlockNumber, successCallBack, errorCallBack){
+function getTransferEvents(memePrices, lastBlockNumber, newBlockNumber, successCallBack, errorCallBack){
   try {
-        var transferEvents = memeInstance.Transfer({event: "Transfer"},{fromBlock: lastBlockNumber, toBlock: 'latest'});
+        var transferEvents = memeInstance.Transfer({event: "Transfer"},{fromBlock: lastBlockNumber, toBlock: newBlockNumber});
         transferEvents.get(function(error, results){
           try {
             var events = [];
             var latestTransactions = {};
-            var newBlockNumber = lastBlockNumber;
             for (var i = 0; i < results.length; i++) {
               var event = [];
               event.push(results[i].transactionHash);
@@ -163,7 +184,6 @@ function getTransferEvents(memePrices, lastBlockNumber, successCallBack, errorCa
               txn.owner = results[i].args.to;
               txn.price = memePrices[memeId];
               latestTransactions[memeId] = txn;
-              newBlockNumber = results[i].blockNumber;
               events.push(event);
             }
             successCallBack(events, lastBlockNumber, newBlockNumber, latestTransactions);
@@ -180,7 +200,7 @@ function getTransferEventsSuccess(events, lastBlockNumber, newBlockNumber, lates
     if(events.length > 0) {
       getTokenSoldEvents(events, lastBlockNumber, newBlockNumber, latestTransactions, getTokenSoldEventsSuccess, getTokenSoldEventsError);
     } else {
-      console.log("****** Job Done : " + new Date());
+      updateBlockNumber(newBlockNumber, updateBlockNumberSuccess, updateBlockNumberError);
     }
 }
 
@@ -362,7 +382,7 @@ function updateMemeOwnerships(newBlockNumber, latestTransactions, successCallBac
 
 
 function updateMemeOwnershipsSuccess(newBlockNumber){
-    updateBlockNumber(newBlockNumber, updateBlockNumberSuccess, updateBlockNumberError)
+    updateBlockNumber(newBlockNumber, updateBlockNumberSuccess, updateBlockNumberError);
 }
 
 function updateMemeOwnershipsError(err){
