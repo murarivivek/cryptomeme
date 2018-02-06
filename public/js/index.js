@@ -32,6 +32,7 @@ var Index = {
         memeTemplate.find('.owner').html('<a href="/user/'+data[i].username+'">'+ownerDisplay+'</a>');
         var price = (data[i].price+ 0.00000049).toFixed(6);
         memeTemplate.find('.price').text(price);
+        memeTemplate.find('.price').attr('data-trueval', price);
         memeTemplate.find('.pet-location').text(data[i].location);
         memeTemplate.find('.btn-buy').attr('data-id', data[i].id);
 
