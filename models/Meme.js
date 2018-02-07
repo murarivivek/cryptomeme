@@ -27,7 +27,7 @@ getAllMemesByOwner:function(name, callback){
 },
 
 getMemeById:function(id,callback){
-	return db.query("Select id, name, description, image_url, price,username from meme inner join meme_ownership on meme_ownership.meme_id=meme.id inner join user on user.wallet_address=meme_ownership.wallet_address and id=? limit 1",[id],callback);
+	return db.query("Select id, name, description, image_url, price,username, transactions_count from meme inner join meme_ownership on meme_ownership.meme_id=meme.id inner join user on user.wallet_address=meme_ownership.wallet_address and id=? limit 1",[id],callback);
 },
 
 /*,

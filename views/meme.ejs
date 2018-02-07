@@ -12,18 +12,62 @@
       <section class="jumbotron text-center">
         <div class="container">
           <h1 class="jumbotron-heading"><%= meme[0].name %></h1>
-          <p class="lead text-muted"><%= meme[0].description %> </p>
+          <!-- p class="lead text-muted"><%= meme[0].description %> </p-->
           <!--p>
-            <a href="#" class="btn btn-primary my-2">Main call to action</a>
-            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+            <a href="#" class="btn btn-primary my-2">BUY THE MEME</a>
+            <!--a href="#" class="btn btn-secondary my-2">Secondary action</a>
           </p-->
         </div>
       </section>
 
-</main>
-<div class="container">
+</main> 
 
+<div class="container bg-white mt-4">
+    <div class="row p-4">
+            
+        <div class="col rounded" >
+         
+            <img src="<%= meme[0].image_url %>" />
+        </div>
+        <div class=" col text-dark">
+            <h1 ><%= meme[0].name %> Meme</h1>
+             <div class="buy-button col mb-4 mt-4">
 
+                <button class="btn btn-block btn-primary btn-buy" type="button" data-id="0">Own the Meme
+                </button>
+              </div>
+
+            <table class="table table-striped table-bordered table-hover table-white " data-bs-hover-animate="pulse">
+                <!--caption>Table Caption</caption-->
+                <tbody>
+                    <tr>
+                        <td>Token Id</td>
+                        <td><%= meme[0].id %></td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td><%= meme[0].price %></td>
+                    </tr>
+                    <tr>
+                        <td>Owner</td>
+                        <td><%= meme[0].username %></td>
+                    </tr>
+                    <tr>
+                        <td>No. of Transactions</td>
+                        <td><%= meme[0].transactions_count %></td>
+                    </tr>
+                    
+                    
+                </tbody>
+            </table>            <p><%= meme[0].description %></p>
+            <div class="photo-tags">
+                <ul>
+                    <li>Item 1<a href="#">ver mais</a></li>
+                    <li>Item 1<a href="#">Comprar </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
      <% include ./partials/footer %>
 
