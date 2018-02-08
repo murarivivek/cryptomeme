@@ -13,26 +13,12 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-	pageNum = req.params.page;
- 	sortBy = req.params.sort;
- 	sortOrder = req.params.sortOrder;
- 	searchTerm = req.params.search;
- 	if(sortBy == undefined){
- 		sortBy = 'created';
- 	}
- 	
- 	if(sortOrder == 'asc'){
- 		sortOrder = 'asc';
- 	}else{
- 		sortOrder = 'desc';
- 	}
- 	if(pageNum == undefined){
- 		pageNum = 0;
- 	}
+  res.render('index');
+})
 
- 	responseJson = {};
-	MemeModel.getAllMemes(pageNum, 200, sortBy, sortOrder, searchTerm,function(err,rows){
-	 	
+app.get('/ranking', function(req,res){
+	responseJson = {};
+	MemeModel.getRanking(function(err,rows){
 		if(err)
 		{
 	  		responseJson = JSON.stringify(err);
@@ -40,10 +26,10 @@ app.get('/', function (req, res) {
 	  	else{
 	  		responseJson = JSON.stringify(rows);
 	  	}
+	  	res.render('ranking',{
+			rankings : responseJson
+		});
 	});
-  res.render('index',{
-  	result : responseJson
-  });
 })
 
 app.get('/user/*', function (req, res) {
