@@ -10,12 +10,13 @@ var Index = {
       window.location = '/';
     }
     $.getJSON(url, function(data) {
+      memes = data.memes;
 
       var petsRow = $('#memeRow');
       var memeTemplate = $('#memeTemplate');
       
-      for (i = 0; i < data.length; i ++) {
-        memeTemplate.find('.card-title').text(data[i].name);
+      for (i = 0; i < memes.length; i ++) {
+        memeTemplate.find('.card-title').text(memes[i].name);
      /*   memeTemplate.find('.movie-header').css({
   "background": "url("+data[i].image_url+")",
   "background-size": "contain",
@@ -23,18 +24,18 @@ var Index = {
   "background-position": "center",
   "border-radius": "10px"
 });*/
-        memeTemplate.find('img').attr('src', data[i].image_url);
-        if(data[i].username){
-                  var ownerDisplay = data[i].username.length>20?data[i].username.substring(0,20)+'...':data[i].username;
+        memeTemplate.find('img').attr('src', memes[i].image_url);
+        if(memes[i].username){
+                  var ownerDisplay = memes[i].username.length>20?memes[i].username.substring(0,20)+'...':memes[i].username;
                 }else{
                   ownerDisplay = "NoOwner";
                 }
-        memeTemplate.find('.owner').html('<a href="/user/'+data[i].username+'">'+ownerDisplay+'</a>');
-        var price = (data[i].price+ 0.00000049).toFixed(6);
+        memeTemplate.find('.owner').html('<a href="/user/'+memes[i].username+'">'+ownerDisplay+'</a>');
+        var price = (memes[i].price+ 0.00000049).toFixed(6);
         memeTemplate.find('.price').text(price);
         memeTemplate.find('.price').attr('data-trueval', price);
-        memeTemplate.find('.pet-location').text(data[i].location);
-        memeTemplate.find('.btn-buy').attr('data-id', data[i].id);
+        memeTemplate.find('.pet-location').text(memes[i].location);
+        memeTemplate.find('.btn-buy').attr('data-id', memes[i].id);
 
         petsRow.append(memeTemplate.html());
       }

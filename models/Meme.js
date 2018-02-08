@@ -15,12 +15,20 @@ if(sortBy == 'price'){
 	sortColumn = 'price';
 }
 if(searchTerm == '' || searchTerm == undefined){
-	return db.query("Select id, name, image_url, price,username from meme left join meme_ownership on meme_ownership.meme_id=meme.id left join user on user.wallet_address=meme_ownership.wallet_address order by ? ? limit ?,?", [sortColumn,sortOrder, rangeStart, count],callback);
+	return db.query("Select id, name, image_url, price,username from meme inner join meme_ownership on meme_ownership.meme_id=meme.id inner join user on user.wallet_address=meme_ownership.wallet_address order by ? ? limit ?,?", [sortColumn,sortOrder, rangeStart, count],callback);
 }else{
 	searchTerm = '%'+searchTerm+'%';
 	return db.query("Select id, name, image_url, price,username from meme inner join meme_ownership on meme_ownership.meme_id=meme.id inner join user on user.wallet_address=meme_ownership.wallet_address where name like ? order by ? ? limit ?,?", [searchTerm, sortColumn,sortOrder, rangeStart, count],callback);
 }
  
+},
+getTotalMemeCount:function(searchTerm, callback){
+	if(searchTerm == '' || searchTerm == undefined){
+		return db.query("Select count(id) as total_meme_count from meme",callback);
+	}else{
+		searchTerm = '%'+searchTerm+'%';
+	return db.query("Select count(id) as total_meme_count where name like ?", [searchTerm],callback);
+	}
 },
 getAllMemesByOwner:function(name, callback){
 	return db.query("Select id, name, image_url, price,username from meme inner join meme_ownership on meme_ownership.meme_id=meme.id inner join user on user.wallet_address=meme_ownership.wallet_address and username=?",[name],callback);	

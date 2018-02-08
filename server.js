@@ -38,7 +38,7 @@ app.get('/user/*', function (req, res) {
 
 app.get('/meme/:id',function(req,res){
 	responseJson = {};
-	console.log("het");
+	
 	MemeModel.getMemeById(req.params.id,function(err, result){
 		if(err)
 		{
@@ -75,18 +75,32 @@ app.get('/memes', function(req, res){
  	if(pageNum == undefined){
  		pageNum = 0;
  	}
+ 	
+ 	perPageCount = 200
 
-
-	MemeModel.getAllMemes(pageNum, 200, sortBy, sortOrder, searchTerm,function(err,rows){
+ 	responseJson = {}
+	MemeModel.getAllMemes(pageNum, perPageCount, sortBy, sortOrder, searchTerm,function(err,rows){
 	 	
 		if(err)
 		{
-	  		res.json(err);
+	  		responseJson.memes =  JSON.parse(JSON.stringify(err));
 	  	}
 	  	else{
-	  		res.json(rows);
+
+	  		responseJson.memes =  JSON.parse(JSON.stringify(rows));
+	  		MemeModel.getTotalMemeCount(searchTerm, function(err,rows){
+	  			
+	  			if(err){
+	  				responseJson.total_page_count = 0;
+	  			}else{
+	  				responseJson.total_page_count = Math.ceil(rows[0].total_meme_count/perPageCount);
+	  			}
+	  			res.send(responseJson)
+	  		});
 	  	}
+
 	});
+
 })
 
 app.get('/usermemes/:name', function(req,res){
