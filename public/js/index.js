@@ -1,6 +1,11 @@
 var Index = {
 
   init: function() {
+/*
+    console.log(memesTotal);
+        console.log(memesPerPage);
+        console.log(memePagesTotal);
+*/
     // Load memes.
     var url = '/memes';
 
@@ -40,14 +45,21 @@ var Index = {
         petsRow.append(memeTemplate.html());
       }
     });
-
+    Index.pagination();
     Index.markAdopted();
 
     return Index.bindEvents();
   },
 
+  pagination: function() {
+    $(".pagination").html('  <li class="page-item"><a class="page-link" href="#">Previous</a></li> <li class="page-item"><a class="page-link" href="#">1</a></li>   <li class="page-item"><a class="page-link" href="#">2</a></li>  <li class="page-item"><a class="page-link" href="#">3</a></li>  <li class="page-item"><a class="page-link" href="#">Next</a></li>      ');
+  },
+
   bindEvents: function() {
     $(document).on('click', '.btn-buy', Index.handleAdopt);
+    $("#btn-modal").click(function(){
+        $("#ShowModal").modal();
+    });
   },
 
   markAdopted: function(adopters, account) {
@@ -103,7 +115,7 @@ var Index = {
 };
 
 $(function() {
-  $(window).load(function() {
+  $(document).ready(function() {
         App.init(Index.init);
   });
 });
