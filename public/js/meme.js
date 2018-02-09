@@ -33,7 +33,7 @@ var Meme = {
 
 };
 $(function() {
-  $(window).load(function() {
+  $(document).ready(function() {
         App.init(Meme.bindEvents);
 
   });
