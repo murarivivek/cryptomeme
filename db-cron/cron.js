@@ -30,7 +30,7 @@ function populateInstance() {
         cron.schedule('* * * * *', populateDBData);
     });
   } catch(err){
-      console.log("****** Error : " + new Date());
+      console.log("****** populateInstance Error : " + new Date());
       console.log(err);
   }
 }
@@ -157,7 +157,7 @@ function getCurrentBlockNumberSuccess(memePrices, lastBlockNumber, newBlockNumbe
 }
 
 function getCurrentBlockNumberError(err){
-  console.log("****** getCurrentBlockNumberSuccess : " + new Date());
+  console.log("****** getCurrentBlockNumberError : " + new Date());
   console.log(err);
 }
 
