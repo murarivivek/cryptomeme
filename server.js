@@ -33,7 +33,7 @@ app.get('/ranking', function(req,res){
 })
 
 app.get('/user/*', function (req, res) {
-  res.render('index')
+  res.render('user')
 })
 
 app.get('/meme/:id',function(req,res){
@@ -58,11 +58,10 @@ app.listen(3000, function () {
 })
 
 app.get('/memes', function(req, res){
-
- 	pageNum = req.body.page;
- 	sortBy = req.body.sort;
- 	sortOrder = req.body.sortOrder;
- 	searchTerm = req.body.search;
+ 	pageNum = req.query.page;
+ 	sortBy = req.query.sortBy;
+ 	sortOrder = req.query.sortOrder;
+ 	searchTerm = req.query.search;
  	if(sortBy == undefined){
  		sortBy = 'created';
  	}
@@ -72,14 +71,14 @@ app.get('/memes', function(req, res){
  	}else{
  		sortOrder = 'desc';
  	}
- 	if(pageNum == undefined){
- 		pageNum = 0;
+ 	perPageCount = 16;
+ 	rangeStart = 0;
+ 	if(pageNum != undefined){
+ 		rangeStart = perPageCount*(pageNum-1);
  	}
- 	
- 	perPageCount = 200
 
  	responseJson = {}
-	MemeModel.getAllMemes(pageNum, perPageCount, sortBy, sortOrder, searchTerm,function(err,rows){
+	MemeModel.getAllMemes(rangeStart, perPageCount, sortBy, sortOrder, searchTerm,function(err,rows){
 	 	
 		if(err)
 		{

@@ -1,34 +1,112 @@
 var Index = {
 
   init: function() {
-/*
-    console.log(memesTotal);
-        console.log(memesPerPage);
-        console.log(memePagesTotal);
-*/
+    if(window.location.search == ''){
+      Index.getSortedMemes(1, 'All Memes', true);
+    }else{
+      $("#dropdownMenuButton").text(Index.getUrlParam('sort'));
+      Index.getSortedMemes(Index.getUrlParam('page'), Index.getUrlParam('sort'), true);
+    }
+  },
+
+  getUrlParam: function(sParam){
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+  },
+
+  pagination: function(pageCount) {
+    $(".pagination").html('');
+    $(".pagination").append('<li class="page-item"><a class="page-link" href="#">Previous</a></li>');
+    for(i=1;i<=pageCount;i++){
+      $(".pagination").append('<li class="page-item"><a class="page-link" href="#">'+i+'</a></li>');
+    }
+    $(".pagination").append('<li class="page-item"><a class="page-link" href="#">Next</a></li>');
+    $(".page-item").removeClass("Active");
+    $(".page-item").eq(Index.getUrlParam('page')).addClass("Active");
+    return Index.bindEvents();
+  },
+
+  bindEvents: function() {
+    $(document).on('click', '.btn-buy', Index.handleAdopt);
+    $("#btn-modal").click(function(){
+        $("#ShowModal").modal();
+    });
+    $(".dropdown-item").click(function(event){
+        event.preventDefault();
+        if($("#dropdownMenuButton").val() != $(this).text()){
+          $("#dropdownMenuButton").text($(this).text());
+          $("#dropdownMenuButton").val($(this).text());
+          Index.getSortedMemes(1, $(this).text(), true);
+        }
+    });
+    $(".page-link").click(function(event){
+      event.preventDefault();
+      if($(this).text() != 'Previous' && $(this).text() != 'Next'){
+        $(".page-item").removeClass("Active");
+        $(".page-item").eq($(this).text()).addClass("Active");
+        Index.getSortedMemes($(this).text(), $("#dropdownMenuButton").text(), false);
+      }else if($(this).text() == 'Previous'){
+        currPage = parseInt(Index.getUrlParam('page'));
+        if(currPage != 1){
+          $(".page-item").removeClass("Active");
+          $(".page-item").eq(currPage-1).addClass("Active");
+          Index.getSortedMemes(currPage-1, $("#dropdownMenuButton").text(), false);
+        }
+      }else if($(this).text() == 'Next'){
+        currPage = parseInt(Index.getUrlParam('page'));
+        if(currPage < $('.page-link').length-2){
+          $(".page-item").removeClass("Active");
+        $(".page-item").eq(currPage+1).addClass("Active");
+          Index.getSortedMemes(currPage+1, $("#dropdownMenuButton").text(), false);
+        }
+      }
+    });
+  },
+
+  getMemeParamsUrl: function(page, sort){
+    sortBy = 'created';
+    sortOrder = 'desc';
+    if(sort == 'Highest Priced'){
+      sortBy = 'price';
+      sortOrder = 'desc';
+    }else if(sort == 'Lowest Priced'){
+      sortBy = 'price';
+      sortOrder = 'asc';
+    }else if(sort == 'Newest'){
+      sortBy = 'created';
+      sortOrder = 'desc';
+    }else if(sort == 'Popular'){
+      sortBy = 'popular';
+      sortOrder = 'desc';
+    }
+    return '?sortBy='+sortBy+'&sortOrder='+sortOrder+'&page='+page;
+  },
+
+  getSortedMemes: function(page, sort, buildPagination){
     // Load memes.
     var url = '/memes';
-
-    if(window.location.pathname.startsWith('/user/')){
-      url = '/usermemes/'+window.location.pathname.substring('/user/'.length);
-    }else if(window.location.pathname!='/'){
-      window.location = '/';
+    searchParams = Index.getMemeParamsUrl(page, sort);
+    if(sort == undefined){
+      sort = 'All Memes';
     }
-    $.getJSON(url, function(data) {
+    window.history.replaceState(null, null, window.location.pathname+'?page='+page+'&sort='+sort);
+    $.getJSON(url+searchParams, function(data) {
       memes = data.memes;
-
       var petsRow = $('#memeRow');
       var memeTemplate = $('#memeTemplate');
-      
+      petsRow.html("");
       for (i = 0; i < memes.length; i ++) {
         memeTemplate.find('.card-title').text(memes[i].name);
-     /*   memeTemplate.find('.movie-header').css({
-  "background": "url("+data[i].image_url+")",
-  "background-size": "contain",
-  "background-repeat":"no-repeat",
-  "background-position": "center",
-  "border-radius": "10px"
-});*/
         memeTemplate.find('img').attr('src', memes[i].image_url);
         if(memes[i].username){
                   var ownerDisplay = memes[i].username.length>20?memes[i].username.substring(0,20)+'...':memes[i].username;
@@ -41,25 +119,13 @@ var Index = {
         memeTemplate.find('.price').attr('data-trueval', price);
         memeTemplate.find('.pet-location').text(memes[i].location);
         memeTemplate.find('.btn-buy').attr('data-id', memes[i].id);
-
         petsRow.append(memeTemplate.html());
       }
+      if(buildPagination){
+        return Index.pagination(data.total_page_count);
+      }
     });
-    Index.pagination();
-    Index.markAdopted();
-
-    return Index.bindEvents();
-  },
-
-  pagination: function() {
-    $(".pagination").html('  <li class="page-item"><a class="page-link" href="#">Previous</a></li> <li class="page-item"><a class="page-link" href="#">1</a></li>   <li class="page-item"><a class="page-link" href="#">2</a></li>  <li class="page-item"><a class="page-link" href="#">3</a></li>  <li class="page-item"><a class="page-link" href="#">Next</a></li>      ');
-  },
-
-  bindEvents: function() {
-    $(document).on('click', '.btn-buy', Index.handleAdopt);
-    $("#btn-modal").click(function(){
-        $("#ShowModal").modal();
-    });
+    
   },
 
   markAdopted: function(adopters, account) {
@@ -103,8 +169,6 @@ var Index = {
         // Execute adopt as a transaction by sending account
         val = (Number(val) + 0.00000049).toFixed(6);
         return memeInstance.purchase(petId, {value: web3.toWei(new web3.BigNumber(val), "ether")});
-      }).then(function(result) {
-        return Index.markAdopted();
       }).catch(function(err) {
         console.log(err.message);
       });
