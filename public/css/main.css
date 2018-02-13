@@ -23,15 +23,24 @@ h1, h2, h3, h4, h5, p {
   font-weight: 400;
 }
 
-.loader {
+.spinner {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #007bff;
   border-bottom: 16px solid #007bff;
   width: 60px;
   height: 60px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  position: absolute;
+  top: 500px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+}
+
+.loader {
+  height: 500px;
 }
 
 @-webkit-keyframes spin {

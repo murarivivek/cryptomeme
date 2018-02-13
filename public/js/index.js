@@ -99,12 +99,14 @@ var Index = {
     if(sort == undefined){
       sort = 'All Memes';
     }
+    
+    var petsRow = $('#memeRow');
+    var memeTemplate = $('#memeTemplate');
+    petsRow.html("");
+    $(".loader").show();
     window.history.replaceState(null, null, window.location.pathname+'?page='+page+'&sort='+sort);
     $.getJSON(url+searchParams, function(data) {
       memes = data.memes;
-      var petsRow = $('#memeRow');
-      var memeTemplate = $('#memeTemplate');
-      petsRow.html("");
       for (i = 0; i < memes.length; i ++) {
         memeTemplate.find('.card-title').text(memes[i].name);
         memeTemplate.find('img').attr('src', memes[i].image_url);
@@ -122,6 +124,7 @@ var Index = {
         memeTemplate.find('.btn-buy').attr('data-id', memes[i].id);
         petsRow.append(memeTemplate.html());
       }
+      $(".loader").hide();
       if(buildPagination){
         return Index.pagination(data.total_page_count);
       }
