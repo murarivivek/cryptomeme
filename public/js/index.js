@@ -113,6 +113,7 @@ var Index = {
                 }else{
                   ownerDisplay = "NoOwner";
                 }
+        memeTemplate.find('.meme-link').attr('href', '/meme/'+memes[i].id);
         memeTemplate.find('.owner').html('<a href="/user/'+memes[i].username+'">'+ownerDisplay+'</a>');
         var price = (memes[i].price+ 0.00000049).toFixed(6);
         memeTemplate.find('.price').text(price);
