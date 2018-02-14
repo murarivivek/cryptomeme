@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Arimo:400,700");
 body {
-  background: #e9e9e9;
+  background: #f7f7f7;
   font-family: calibri, 'Arimo', Arial, sans-serif;
   font-weight: 400;
   /* font-size:10px; */
@@ -62,9 +62,9 @@ a:hover {
   color: #6ABCEA;
 }
 .navbar-gradient{
-  background: -webkit-linear-gradient(45deg, #007bff 48%, #1b1e21 48%);
-  background: -webkit-linear-gradient(left, #007bff 48%, #1b1e21 48%);
-  background: linear-gradient(45deg, #007bff 48%, #1b1e21 48%);
+  background: -webkit-linear-gradient(45deg, #ffc40c 48%, #444466 48%);
+  background: -webkit-linear-gradient(left, #ffc40c 48%, #444466 48%);
+  background: linear-gradient(45deg, #ffc40c 48%, #673ab7 48%);
 }
 .movie-card {
   background: #ffffff;
@@ -207,16 +207,17 @@ a:hover {
   --jumbotron-padding-y: 3rem;
 }
 
-.jumbotron {
+.jumbotron,.user_jumbotron {
   padding-top: var(--jumbotron-padding-y);
   padding-bottom: var(--jumbotron-padding-y);
   margin-bottom: 0;
   background-color: #fff;
 }
 @media (min-width: 768px) {
-  .jumbotron {
+  .jumbotron, .user_jumbotron {
   /*  padding-top: calc(var(--jumbotron-padding-y) * 2);
     padding-bottom: calc(var(--jumbotron-padding-y) * 2);*/
+  margin-top: 50px;
   }
 }
 
@@ -359,6 +360,31 @@ color:#607d8bad;
   transition:color 0.3s ease;
 }
 
+ .navbar {
+  max-height: 50px;
+}
+
+.navbar-brand {
+  padding: 0 15px;
+  /*height: 80px;
+  line-height: 80px;*/
+}
+
+.navbar-toggle {
+  /* (80px - button height 34px) / 2 = 23px */
+  margin-top: 23px;
+  padding: 9px 10px !important;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav > li > a {
+    /* (80px - line-height of 27px) / 2 = 26.5px */
+    padding-top: 26.5px;
+    padding-bottom: 26.5px;
+    line-height: 27px;
+  }
+}
+
 .photo-tags a:hover, .photo-tags a:focus {
   color:#e37544;
 }
@@ -367,4 +393,122 @@ color:#607d8bad;
   color:white;
 }
 
+@font-face {
+  font-family: 'museo_sans';
+  src: url("../fonts/museosans.woff2") format("woff2"), url("../fonts/museosans.woff") format("woff"), url("../fonts/museosans.ttf") format("truetype"), url("../fonts/museosans.svg#museo_sans500") format("svg");
+  font-weight: normal;
+  font-style: normal; }
 
+.btn-buy{
+  background-color: #673ab7;
+  height:50px;
+  border-radius: 15px;
+  border-color: #444466;
+}
+.btn-buy:hover{
+  background-color: #ffc40c;
+  height:50px;
+  border-radius: 15px;
+  border-color: #ffc40c;
+  color: #000;
+}
+.navbar-brand strong{
+  color:#000;
+}
+#statistics, .user_jumbotron{
+  background-color: #ffc40c !important;
+}
+
+
+#statistics .cover {
+  padding: 40px 0 0 0;
+  padding-bottom: 40px;
+  /* min-height: 270PX; */
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#statistics .cover h2 {
+  color: #FFF;
+  border-bottom-color: #FFF;
+}
+
+#statistics .cover .row div[class*="col-"] {
+  margin: 15px 0 20px;
+}
+
+#statistics .cover .row div[class*="col-"]:last-of-type {
+  margin-bottom:0
+}
+
+#statistics .cover .row div[class*="col-"] i {
+  position: relative;
+  font-size: 50px;
+  color: #FFF;
+  top: 3px;
+  margin-right: 10px;
+  right: 1px
+}
+
+#statistics .cover .row div[class*="col-"] h4 {
+  text-transform: uppercase;
+  color: #FFF;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  margin: 0
+}
+
+#statistics .cover .row div[class*="col-"] .timer {
+  font-size: 45px;
+  font-weight: bold;
+  color: #FFF;
+  font-family: sans-serif;
+  margin: 0;
+}
+
+.bars {
+  margin: 20px;
+  width: calc(100% - 30px);
+  height: 8px;
+  position: relative;
+  
+}
+
+.circles {
+  position: relative;
+  height: 120px;
+  width: 120px;
+  margin: 20px auto;
+}
+
+ .watch-wrap a > i {
+  -webkit-transition: all 0.4s linear;
+  -moz-transition: all 0.4s linear;
+  -o-transition: all 0.4s linear;
+  -ms-transition: all 0.4s linear;
+  transition: all 0.4s linear;
+  cursor: pointer;
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+  font-size: 70px;
+  color: #000;
+  height: 30px;
+  /* width: 50px; */
+  line-height: 30px;
+  /* margin: auto; */
+}
+
+.watch-wrap a > i:last-of-type{
+    opacity: 0;
+    top: 15px;
+    color: #1b0e00;
+    z-index: 2;
+}
+.watch-wrap  a > i:hover + i{
+  opacity: 1;
+}
+.watch-wrap  a > i:first-of-type {
+  z-index: 27;
+}
+#statistics .lead{
+  color:white;
+}

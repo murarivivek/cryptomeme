@@ -15,6 +15,9 @@ app.use(express.static('public'));
 app.get('/', function (req, res) {
   res.render('index');
 })
+app.get('/homepage', function (req, res) {
+  res.render('homepage');
+})
 
 app.get('/ranking', function(req,res){
 	responseJson = {};
