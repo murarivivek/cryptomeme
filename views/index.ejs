@@ -82,26 +82,25 @@
 </ul>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="btn-modal">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#metamaskModal" id="btn-modal">
   Launch centered demo modal
 </button>
 
 <!-- Modal -->
-<div class="modal" id="ShowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalVerticalLabel" aria-hidden="true">
+<div class="modal" id="metamaskModal" tabindex="-1" role="dialog" aria-labelledby="metamaskModalVerticalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalVerticalLabel">Modal title</h5>
+        <h5 class="modal-title" id="metamaskModalVerticalLabel">Buy Meme</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <div><div class="text-center"><label class="label">Meme Price (ETH)</label><div><input type="number" class="form-control" id="memeBuyPrice" placeholder="Meme Price (ETH)" value=""></div></div><a class="d-block mx-auto" id="buyMeme" style="max-width: 350px; margin-top:5px;"><img class="w-100" src="/images/metamask-pay.png"></a></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <span>Transactions can sometimes take few minutes to process. By the time you buy this Meme, it is possible that the price may be higher than shown here. You can submit higher amount to increase chances of successful transaction. If the bid is higher than current price, the difference will be refunded automatically.</span>
       </div>
     </div>
   </div>

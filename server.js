@@ -12,10 +12,11 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs')
 app.use(express.static('public'));
 
-app.get('/', function (req, res) {
+app.get('/market', function (req, res) {
   res.render('index');
 })
-app.get('/homepage', function (req, res) {
+
+app.get('/', function (req, res) {
   res.render('homepage');
 })
 
@@ -35,21 +36,21 @@ app.get('/ranking', function(req,res){
 	});
 })
 
-app.get('/user/*', function (req, res) {
-  res.render('user')
+app.get('/user/:id', function (req, res) {
+  MemeModel.getUserDetails(req.params.id, function(err, result){
+  	if(result.length == 0){
+  		res.redirect("/market")
+  	}else{
+  		res.render('user',{
+			user : result
+		});
+  	}
+  });
+  
 })
 
 app.get('/meme/:id',function(req,res){
-	responseJson = {};
-	
 	MemeModel.getMemeById(req.params.id,function(err, result){
-		if(err)
-		{
-	  		response = err;
-	  	}
-	  	else{
-	  		response = result;
-	  	}
 		res.render('meme',{
 			meme : result
 		});

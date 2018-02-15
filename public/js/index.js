@@ -24,6 +24,15 @@ var Index = {
     }
   },
 
+  showBuyModal: function(event){
+    event.preventDefault();
+    var petId = parseInt($(event.target).attr('data-id'));
+    price = $(event.target).parent().parent().parent().find('.price').attr('data-trueval');
+    $("#memeBuyPrice").val(price);
+    $("#buyMeme").attr("data-id", petId);
+    $("#metamaskModal").modal();
+  },
+
   pagination: function(pageCount) {
     $(".pagination").html('');
     $(".pagination").append('<li class="page-item"><a class="page-link" href="#">Previous</a></li>');
@@ -37,10 +46,7 @@ var Index = {
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn-buy', Index.handleAdopt);
-    $("#btn-modal").click(function(){
-        $("#ShowModal").modal();
-    });
+    //$(document).on('click', '.btn-buy', Index.handleAdopt);
     $(".dropdown-item").click(function(event){
         event.preventDefault();
         if($("#dropdownMenuButton").val() != $(this).text()){
@@ -71,6 +77,7 @@ var Index = {
         }
       }
     });
+    $(document).on('click', '.btn-buy', Index.showBuyModal);
   },
 
   getMemeParamsUrl: function(page, sort){
@@ -116,11 +123,10 @@ var Index = {
                   ownerDisplay = "NoOwner";
                 }
         memeTemplate.find('.meme-link').attr('href', '/meme/'+memes[i].id);
-        memeTemplate.find('.owner').html('<a href="/user/'+memes[i].username+'">'+ownerDisplay+'</a>');
+        memeTemplate.find('.owner').html('<a href="/user/'+memes[i].wallet_address+'">'+ownerDisplay+'</a>');
         var price = (memes[i].price+ 0.00000049).toFixed(6);
         memeTemplate.find('.price').text(price);
         memeTemplate.find('.price').attr('data-trueval', price);
-        memeTemplate.find('.pet-location').text(memes[i].location);
         memeTemplate.find('.btn-buy').attr('data-id', memes[i].id);
         petsRow.append(memeTemplate.html());
       }
@@ -130,28 +136,6 @@ var Index = {
       }
     });
     
-  },
-
-  markAdopted: function(adopters, account) {
-    var memeInstance;
-
-    App.contracts.Meme.deployed().then(function(instance) {
-      memeInstance = instance;
-      var tokenIds = [];
-      $('.btn-buy').each(function(index, ele){tokenIds[index] = parseInt(ele.getAttribute('data-id'))});
-      memeInstance.getMemeSellingPrices(tokenIds).then(function(meme){
-        for(i=0;i<tokenIds.length;i++){
-          var doc = $('.movie-card').eq(i);
-          val = (Number(web3.fromWei(meme[i], "ether").toNumber()) + 0.00000049).toFixed(6);
-          trueval = Number(web3.fromWei(meme[i], "ether").toNumber());
-          doc.find('.price').text(val);
-          doc.find('.price').attr('data-trueval',trueval);
-        }
-      });
-
-    }).catch(function(err) {
-      console.log(err.message);
-    });
   },
 
   handleAdopt: function(event) {

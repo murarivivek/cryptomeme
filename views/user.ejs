@@ -11,8 +11,9 @@
 
 <section id="statistics" class="user_jumbotron ">
     <div class="cover text-center container">
-      <h2 class="heading">Lucky Murari USER</h2>
-                <p class="lead">Address: 0xbb0572f17b662b75c83b5309ff612866fb5d811d </p>
+      <% displayUsername = user[0].username;if(user[0].username==user[0].wallet_address){displayUsername="Anonymous";} %>
+      <h2 class="heading"><%= displayUsername %></h2>
+                <p class="lead">Address: <%=user[0].wallet_address %></p>
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-sm-6">
