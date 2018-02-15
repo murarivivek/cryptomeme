@@ -33,7 +33,7 @@
             <h1 ><%= meme[0].name %> Meme</h1>
              <div class="buy-button col mb-4 mt-4">
 
-                <button class="btn btn-block btn-primary btn-buy" type="button" data-id="0">Own the Meme
+                <button class="btn btn-block btn-primary btn-buy" type="button" meme-id="<%= meme[0].id %>" meme-price="<%= meme[0].price %>">Own the Meme
                 </button>
               </div>
 
@@ -50,7 +50,7 @@
                     </tr>
                     <tr>
                         <td>Owner</td>
-                        <td><a href="/user/<%= meme[0].username %>" ><%= meme[0].username %></a></td>
+                        <td><a href="/user/<%= meme[0].wallet_address %>" ><%= meme[0].username %></a></td>
                     </tr>
                     <tr>
                         <td>No. of Transactions</td>
@@ -68,6 +68,7 @@
             </div-->
         </div>
     </div>
+    <% include ./partials/modal %>
 </div>
      <% include ./partials/footer %>
 

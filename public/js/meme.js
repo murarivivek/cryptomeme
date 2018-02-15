@@ -1,12 +1,14 @@
 var Meme = {
 
   bindEvents: function() {
-    $(document).on('click', '.btn-buy', Meme.handleAdopt);
+    $(document).on('click', '.btn-buy', Meme.showBuyModal);
+    $("#buyMeme").click(function(event){
+        Meme.handleAdopt($("#buyMeme").attr("data-id"),$("#memeBuyPrice").val());
+    });
   },
- handleAdopt: function(event) {
-    event.preventDefault();
+ handleAdopt: function(memeId, price) {
 
-    var petId = parseInt($(event.target).attr('data-id'));
+  
     var memeInstance;
 
     web3.eth.getAccounts(function(error, accounts) {
@@ -18,17 +20,22 @@ var Meme = {
 
       App.contracts.Meme.deployed().then(function(instance) {
         memeInstance = instance;
-        var val = $('.movie-card').eq(petId).find('.price').attr('data-trueval');
-        // Execute adopt as a transaction by sending account
-        val = (Number(val) + 0.00000049).toFixed(6);
-        return memeInstance.purchase(petId, {value: web3.toWei(new web3.BigNumber(val), "ether")});
-      }).then(function(result) {
-        return Index.markAdopted();
+        return memeInstance.purchase(memeId, {value: web3.toWei(new web3.BigNumber(price), "ether")});
       }).catch(function(err) {
         console.log(err.message);
       });
     });
     
+  },
+
+  showBuyModal: function(event){
+    event.preventDefault();
+    var memeId = parseInt($(event.target).attr('meme-id'));
+    price = $(event.target).attr('meme-price');
+    $("#metamaskModalVerticalLabel").text("Buy " + $(event.target).parent().parent().parent().find('.card-title').text() + " Meme");
+    $("#memeBuyPrice").val(price);
+    $("#buyMeme").attr("data-id", memeId);
+    $("#metamaskModal").modal();
   }
 
 };
