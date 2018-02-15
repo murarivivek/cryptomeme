@@ -67,8 +67,9 @@ h2 {
     line-height: 30px; }
 
 a {
-  font-family: "museo_sans";
-  text-decoration: none; }
+  /* font-family: "museo_sans"; */
+  text-decoration: none;
+  }
 
 .bg-demos-text, .specials-bg-text, .support-bg-text {
   position: absolute;
@@ -2096,7 +2097,8 @@ body {
     text-transform: none; } }
 
 a {
-  outline: none !important; }
+  outline: none !important;
+  }
 
 /*===============================================  IFRAME  ==================================================*/
 /*===============================================  COUNTDOWN  ===============================================*/
