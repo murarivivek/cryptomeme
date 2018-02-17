@@ -181,24 +181,6 @@ contract MemeToken is ERC721 {
 
   /// @notice Returns all the relevant information about a specific meme.
   /// @param _tokenIds The tokenId of the meme of interest.
-  function getMemes(uint256[] _tokenIds) public view returns (
-    Memes[] resultMemes
-  ) {
-    resultMemes = new Memes[](_tokenIds.length);
-    for(uint i=0;i<_tokenIds.length;i++){
-      Meme memory meme = memes[_tokenIds[i]];
-      Memes memory resultMeme;
-      resultMeme.Id = _tokenIds[i];
-      resultMeme.memeName = meme.name;
-      resultMeme.sellingPrice = memeIndexToPrice[_tokenIds[i]];
-      resultMeme.owner = memeIndexToOwner[_tokenIds[i]];
-      resultMemes[i]=resultMeme;
-    }
-    
-  }
-
-  /// @notice Returns all the relevant information about a specific meme.
-  /// @param _tokenIds The tokenId of the meme of interest.
   function getMemeSellingPrices(uint256[] _tokenIds) public view returns (
     uint256[] sellingPrices
   ) {
@@ -207,41 +189,6 @@ contract MemeToken is ERC721 {
       sellingPrices[i]=memeIndexToPrice[_tokenIds[i]];
     }
 
-  }
-
-  /// @notice Returns all the relevant information about a specific meme.
-  /// @param _tokenIdStart The start tokenId of the range of meme.
-  /// @param _tokenIdEnd The end tokenId of the range of meme.
-  function getMemeSellingPricesByRange(uint256 _tokenIdStart, uint256 _tokenIdEnd) public view returns (
-    uint256[] sellingPrices
-  ) {
-    sellingPrices = new uint256[](_tokenIdEnd-_tokenIdStart);
-    for(uint i=0;i<(_tokenIdEnd-_tokenIdStart);i++){
-      sellingPrices[i]=memeIndexToPrice[i+_tokenIdStart];
-    }
-  }
-
-  /// @notice Returns all the relevant information about a specific meme.
-  /// @param _tokenIdStart The start tokenId of the range of meme.
-  /// @param _tokenIdEnd The end tokenId of the range of meme.
-  function getMemeOwnersByRange(uint256 _tokenIdStart, uint256 _tokenIdEnd) public view returns (
-    address[] owners
-  ) {
-    owners = new address[](_tokenIdEnd-_tokenIdStart);
-    for(uint i=0;i<(_tokenIdEnd-_tokenIdStart);i++){
-      owners[i]=memeIndexToOwner[i+_tokenIdStart];
-    }
-  }
-
-  /// @notice Returns all the relevant information about a specific meme.
-  /// @param _tokenIds The tokenId of the meme of interest.
-  function getMemeOwners(uint256[] _tokenIds) public view returns (
-    address[] owners
-  ) {
-    owners = new address[](_tokenIds.length);
-    for(uint i=0;i<_tokenIds.length;i++){
-      owners[i]=memeIndexToOwner[_tokenIds[i]];
-    }
   }
 
   function implementsERC721() public pure returns (bool) {
