@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `meme` (
   `id` bigint(20) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `description` varchar(1023) DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
   `image_url` varchar(1023) DEFAULT NULL,
   `base_price` decimal(50, 30) NOT NULL DEFAULT 0.001,
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
