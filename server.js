@@ -124,6 +124,14 @@ app.get('/faq', function (req, res) {
   res.render('faq');
 })
 
+app.get('/privacy-policy', function (req, res) {
+  res.render('privacy-policy');
+})
+
+app.get('/contact', function (req, res) {
+  res.render('contact');
+})
+
 app.use(function(req, res) {
     res.redirect('/');
 });
