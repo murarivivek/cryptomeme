@@ -41,7 +41,7 @@ The round pegs in the square holes.
         <% displayUsername = rankingsJson[i].username; if(rankingsJson[i].username == rankingsJson[i].wallet_address){displayUsername = "Anonymous";} %>
         <td class="col-7"><a href="/user/<%= rankingsJson[i].wallet_address %>"> <%=displayUsername %></a></td>
         <td class="col-2"><%= rankingsJson[i].memecount %></td>
-        <td class="col-2"><%= rankingsJson[i].worth %></td>
+        <td class="col-2"><%= (rankingsJson[i].worth + 0.00000049).toFixed(6) %></td>
       </tr>
       <% } %>
     </tbody>
