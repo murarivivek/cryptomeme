@@ -65,6 +65,7 @@ var User = {
 
     if(!App.metamaskInstalled){
       $('#noMetaMaskAlert').show();
+      return;
     }else{
       $('#noMetaMaskAlert').hide();
     }
@@ -87,9 +88,11 @@ var User = {
           $('#transactionSuccess').show();
         }).catch(function(err){
           $('#userDeniedTransaction').show();
+          return;
         });
       }).catch(function(err) {
         $('#metaMaskLockedAlert').show();
+        return;
       });
     });
     
