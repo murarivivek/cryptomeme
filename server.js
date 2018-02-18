@@ -140,6 +140,10 @@ app.get('/contact', function (req, res) {
   res.render('contact');
 })
 
+app.get('/terms-of-service', function (req, res) {
+  res.render('terms-of-service');
+})
+
 app.use(function(req, res) {
     res.redirect('/');
 });
