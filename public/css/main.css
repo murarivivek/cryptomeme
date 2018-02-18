@@ -684,3 +684,22 @@ footer .copyright p a:focus {
 .nav-item:hover>a{
   color:#000;
 }
+
+.address-toggle, .address-toggle:hover{
+  background-color: #4CAF50;
+  border-radius: 68px;
+  /* border: 2px; */
+  /* border: 1px solid #ffc40c; */
+}
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.nickname{right: 0px;left: auto;background: transparent;border: 0px;padding-top: 2px;}
+
+.nickname > a{
+  background-color: #ddd;
+  border-radius: 5px;
+  border: 2px solid #ddd;
+}
