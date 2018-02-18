@@ -38,7 +38,9 @@ The round pegs in the square holes.
       <% for (var i = 0; i < rankingsJson.length; i++) { %>
       <tr class="row">
         <td class="col-1"><%= i+1 %>.</td>
-        <% displayUsername = rankingsJson[i].username; if(rankingsJson[i].username == rankingsJson[i].wallet_address){displayUsername = "Anonymous";} %>
+        <% displayUsername = rankingsJson[i].username; if(rankingsJson[i].username == rankingsJson[i].wallet_address){displayUsername = "Anonymous";
+          displayUsername = displayUsername.toUpperCase();
+        } %>
         <td class="col-7"><a href="/user/<%= rankingsJson[i].wallet_address %>"> <%=displayUsername %></a></td>
         <td class="col-2"><%= rankingsJson[i].memecount %></td>
         <td class="col-2"><%= (rankingsJson[i].worth + 0.00000049).toFixed(6) %></td>
@@ -65,7 +67,9 @@ The round pegs in the square holes.
       <% for (var i = 0; i < rankingsJson.length; i++) { %>
       <tr class="row">
         <td class="col-2"><%= i+1 %>.</td>
-        <% displayUsername = rankingsJson[i].username; if(rankingsJson[i].username == rankingsJson[i].wallet_address){displayUsername = "Anonymous";} %>
+        <% displayUsername = rankingsJson[i].username; if(rankingsJson[i].username == rankingsJson[i].wallet_address){displayUsername = "Anonymous";
+          displayUsername = displayUsername.toUpperCase();
+        } %>
         <td class="col-7"><a href="/user/<%= rankingsJson[i].wallet_address %>"> <%=displayUsername %></a></td>
         <td class="col-3"><%= rankingsJson[i].memecount %></td>
         <!--td class="col-2"><%= rankingsJson[i].worth %></td-->
