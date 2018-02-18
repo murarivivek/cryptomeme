@@ -120,6 +120,9 @@ app.get('/usermemes/:name', function(req,res){
 	});
 })
 
+app.get('/faq', function (req, res) {
+  res.render('faq');
+})
 
 app.use(function(req, res) {
     res.redirect('/');
