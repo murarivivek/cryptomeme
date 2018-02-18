@@ -29,7 +29,7 @@ var Meme = {
       App.contracts.Meme.deployed().then(function(instance) {
         memeInstance = instance;
         return memeInstance.purchase(memeId, {value: web3.toWei(new web3.BigNumber(price), "ether")}).then(function(result){
-          $('#transactionSuccess').html("Your transaction has been submitted. <a href='https://etherscan.io/tx/"+result.tx+"' style='text-decoration:underline;'>View on etherscan</a> for progress.");
+          $('#transactionSuccess').html("Your transaction has been submitted. <a target='_blank' href='https://etherscan.io/tx/"+result.tx+"' style='text-decoration:underline;'>View on etherscan</a> for progress.");
           $('#transactionSuccess').show();
         }).catch(function(err){
           $('#userDeniedTransaction').show();
