@@ -9,6 +9,18 @@
       </div>
       <div class="modal-body">
         <div><div class="text-center"><label class="label">Meme Price (ETH)</label><div><input type="number" class="form-control" id="memeBuyPrice" placeholder="Meme Price (ETH)" value=""></div></div><a class="d-block mx-auto" id="buyMeme" style="max-width: 350px; margin-top:5px; cursor: pointer;"><img class="w-100" src="/images/metamask-pay.png"></a></div>
+        <div class="alert alert-warning" role="alert" id="noMetaMaskAlert" style="display:none;">
+          Please install the <a href="https://metamask.io/" target="_blank">MetaMask</a> secure wallet in order to transact.
+        </div>
+        <div class="alert alert-warning" role="alert" id="metaMaskLockedAlert" style="display:none;">
+          Metamask is locked. Please unlock and refresh this page. Or you are on wrong network on MetaMask. Please change to MainNet and refresh this page.
+        </div>
+        <div class="alert alert-warning" role="alert" id="userDeniedTransaction" style="display:none;">
+          You cancelled the transaction or your connection was lost before the transaction finalized. Please try again.
+        </div>
+        <div class="alert alert-warning" role="alert" id="transactionSuccess" style="display:none;">
+          Your transaction has been submitted.
+        </div>
       </div>
       <div class="modal-footer">
         <span>Transactions can sometimes take few minutes to process. By the time you buy this Meme, it is possible that the price may be higher than shown here. You can submit higher amount to increase chances of successful transaction. If the bid is higher than current price, the difference will be refunded automatically.</span>

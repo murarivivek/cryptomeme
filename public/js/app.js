@@ -1,6 +1,7 @@
 App = {
   web3Provider: null,
   contracts: {},
+  metamaskInstalled: true,
 
   init: function(finalCallBack) {
     return App.initWeb3(finalCallBack);
@@ -10,9 +11,10 @@ App = {
   initWeb3: function(finalCallBack) {
     // Is there an injected web3 instance?
     if (typeof web3 !== 'undefined') {
+      $('#noMetaMaskAlert').hide();
       App.web3Provider = web3.currentProvider;
     } else {
-      // If no injected web3 instance is detected, fall back to Ganache
+      App.metamaskInstalled = false;
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
     }
     web3 = new Web3(App.web3Provider);

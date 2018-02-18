@@ -7,7 +7,15 @@ var Meme = {
     });
   },
  handleAdopt: function(memeId, price) {
-
+    
+    if(!App.metamaskInstalled){
+      $('#noMetaMaskAlert').show();
+    }else{
+      $('#noMetaMaskAlert').hide();
+    }
+    $('#metaMaskLockedAlert').hide();
+    $('#userDeniedTransaction').hide();
+    $('#transactionSuccess').hide();
   
     var memeInstance;
 
@@ -20,9 +28,14 @@ var Meme = {
 
       App.contracts.Meme.deployed().then(function(instance) {
         memeInstance = instance;
-        return memeInstance.purchase(memeId, {value: web3.toWei(new web3.BigNumber(price), "ether")});
+        return memeInstance.purchase(memeId, {value: web3.toWei(new web3.BigNumber(price), "ether")}).then(function(result){
+          $('#transactionSuccess').html("Your transaction has been submitted. <a href='https://etherscan.io/tx/"+result.tx+"' style='text-decoration:underline;'>View on etherscan</a> for progress.");
+          $('#transactionSuccess').show();
+        }).catch(function(err){
+          $('#userDeniedTransaction').show();
+        });
       }).catch(function(err) {
-        console.log(err.message);
+        $('#metaMaskLockedAlert').show();
       });
     });
     
@@ -35,6 +48,10 @@ var Meme = {
     $("#metamaskModalVerticalLabel").text("Buy " + $(event.target).parent().parent().parent().find('.card-title').text() + " Meme");
     $("#memeBuyPrice").val(price);
     $("#buyMeme").attr("data-id", memeId);
+    $('#noMetaMaskAlert').hide();
+    $('#metaMaskLockedAlert').hide();
+    $('#userDeniedTransaction').hide();
+    $('#transactionSuccess').hide();
     $("#metamaskModal").modal();
   }
 

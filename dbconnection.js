@@ -3,13 +3,13 @@ var mysql=require('mysql');
 var MyAppModel = mysqlModel.createPool({
   host     : 'localhost',
   user     : 'root',
-  password : '',
+  password : 'pg02032016',
   database : 'cryptomeme',
 });*/
 var connection=mysql.createPool({ 
 	host:'localhost',
 	user:'root',
- 	password:'',
+ 	password:'pg02032016',
 	database:'cryptomeme'
 });
 /*exports.connection = connection;
