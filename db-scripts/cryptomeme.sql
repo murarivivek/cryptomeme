@@ -35,8 +35,7 @@ CREATE TABLE `user` (
   `last_modified_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_modified_user` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`wallet_address`),
-  UNIQUE KEY `username_UNIQUE` (`username`)
+  PRIMARY KEY (`wallet_address`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
