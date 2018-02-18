@@ -19,7 +19,7 @@
           <div class="col-md-4 col-sm-6">
             <div>
               <i class="pe-7s-smile"></i>
-              <span class="timer" data-from="50" data-to="500" data-speed="2300" data-refresh-interval="50">50</span>
+              <span class="timer" data-from="50" data-to="500" data-speed="2300" data-refresh-interval="50"><%=user[0].memes_owned %></span>
               <h4>Memes Owned</h4>
               
             </div>
@@ -27,14 +27,14 @@
           <div class="col-md-4 col-sm-6">
             <div>
               <i class="pe-7s-server"></i>
-              <span class="timer" data-from="0" data-to="782" data-speed="3000" data-refresh-interval="50">782</span>
+              <span class="timer" data-from="0" data-to="782" data-speed="3000" data-refresh-interval="50"><%=user[0].transaction_count %></span>
               <h4>Total Transactions</h4>
             </div>
           </div>
           <div class="col-md-4 col-sm-6">
             <div>
               <i class="pe-7s-piggy"></i>
-              <span class="timer" data-from="152" data-to="25532" data-speed="4000" data-refresh-interval="50">25532 ETH</span>
+              <span class="timer" data-from="152" data-to="25532" data-speed="4000" data-refresh-interval="50"><%=(user[0].worth + 0.00049).toFixed(3) %> ETH</span>
               <h4>Net Worth</h4>
             </div>
           </div>
