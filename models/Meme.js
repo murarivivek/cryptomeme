@@ -42,6 +42,12 @@ getMemeById:function(id,callback){
 getRanking:function(callback){
 	return db.query("select username, user.wallet_address, sum(price) as worth, count(meme_id) as memecount from meme_ownership inner join user on meme_ownership.wallet_address = user.wallet_address group by meme_ownership.wallet_address order by worth desc limit 100;",callback);
 },
+getRanking:function(callback){
+	return db.query("select username, user.wallet_address, sum(price) as worth, count(meme_id) as memecount from meme_ownership inner join user on meme_ownership.wallet_address = user.wallet_address group by meme_ownership.wallet_address order by worth desc limit 100;",callback);
+},
+getRankingActive:function(callback){
+	return db.query("select username, user.wallet_address, count(ownership_transfer_log.to_address) as transaction_count from user inner join ownership_transfer_log on ownership_transfer_log.to_address = user.wallet_address group by user.wallet_address order by transaction_count desc limit 100", callback);
+},
 getUserDetails:function(wallet_address, callback){
 	return db.query("select username, user.wallet_address, memes_owned, worth, count(ownership_transfer_log.to_address) as transaction_count from (Select username, user.wallet_address, count(meme_ownership.meme_id) as memes_owned, sum(meme_ownership.price)  as worth from user left join meme_ownership on user.wallet_address=meme_ownership.wallet_address where user.wallet_address=? group by user.wallet_address) as user left join ownership_transfer_log on user.wallet_address=ownership_transfer_log.to_address group by user.wallet_address",[wallet_address],callback);
 },

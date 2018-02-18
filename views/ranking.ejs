@@ -34,7 +34,7 @@ The round pegs in the square holes.
       </tr>
     </thead>
     <tbody>
-      <% rankingsJson =  JSON.parse(rankings) %>
+      <% rankingsJson =  JSON.parse(networth) %>
       <% for (var i = 0; i < rankingsJson.length; i++) { %>
       <tr class="row">
         <td class="col-1"><%= i+1 %>.</td>
@@ -62,14 +62,14 @@ The round pegs in the square holes.
       </tr>
     </thead>
     <tbody>
-      <% rankingsJson =  JSON.parse(rankings) %>
+      <% rankingsJson =  JSON.parse(active) %>
       <% for (var i = 0; i < rankingsJson.length; i++) { %>
       <tr class="row">
         <td class="col-2"><%= i+1 %>.</td>
         <% displayUsername = rankingsJson[i].username; if(rankingsJson[i].username == rankingsJson[i].wallet_address){displayUsername = "Anonymous";
         }%>
         <td class="col-7"><a href="/user/<%= rankingsJson[i].wallet_address %>"> <%=displayUsername %></a></td>
-        <td class="col-3"><%= rankingsJson[i].memecount %></td>
+        <td class="col-3"><%= rankingsJson[i].transaction_count %></td>
         <!--td class="col-2"><%= rankingsJson[i].worth %></td-->
       </tr>
       <% } %>

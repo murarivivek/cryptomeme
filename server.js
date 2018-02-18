@@ -25,14 +25,22 @@ app.get('/ranking', function(req,res){
 	MemeModel.getRanking(function(err,rows){
 		if(err)
 		{
-	  		responseJson = JSON.stringify(err);
+	  		responseJson.networth = JSON.stringify(err);
 	  	}
 	  	else{
-	  		responseJson = JSON.stringify(rows);
+	  		responseJson.networth = JSON.stringify(rows);
 	  	}
-	  	res.render('ranking',{
-			rankings : responseJson
-		});
+	  	MemeModel.getRankingActive(function(err, rows){
+		  	if(err){
+		  		responseJson.active = JSON.stringify(err);
+		  	}else{
+		  		responseJson.active = JSON.stringify(rows);
+		  	}
+		  	res.render('ranking',{
+				networth : responseJson.networth,
+				active : responseJson.active
+			});
+	  	});
 	});
 })
 
