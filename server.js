@@ -46,13 +46,20 @@ app.get('/ranking', function(req,res){
 
 app.get('/user/:id', function (req, res) {
   MemeModel.getUserDetails(req.params.id, function(err, result){
+
   	if(result.length == 0){
-  		res.redirect("/market")
-  	}else{
-  		res.render('user',{
-			user : result
-		});
+  		result = [];
+  		user = {};
+  		user.wallet_address = req.params.id;
+  		user.username = req.params.id;
+  		user.memes_owned = 0;
+  		user.transaction_count = 0;
+  		user.worth = 0;
+  		result[0] = user;
   	}
+	res.render('user',{
+		user : result
+	});
   });
   
 })

@@ -1,11 +1,27 @@
 var Index = {
 
   init: function() {
+    Index.userConnectedMessage();
     if(window.location.search == ''){
       Index.getSortedMemes(1, 'All Memes', true);
     }else{
       $("#dropdownMenuButton").text(Index.getUrlParam('sort'));
       Index.getSortedMemes(Index.getUrlParam('page'), Index.getUrlParam('sort'), true);
+    }
+  },
+
+  userConnectedMessage: function(){
+    if(App.metamaskInstalled){
+      web3.eth.getAccounts(function(error, accounts) {
+        var account = accounts[0];
+        $('#address').text(account.substring(0,8));
+        $('#addressMemes').text('My Memes');
+        $('#addressMemes').attr('href', '/user/'+account);
+      });
+    }else{
+      $('#address').text('Not Connected');
+      $('#addressMemes').text('How to Connect');
+      $('#addressMemes').attr('href', '/faq/#installMetamask');
     }
   },
 
@@ -51,7 +67,7 @@ var Index = {
   },
 
   bindEvents: function() {
-    $(".dropdown-item").click(function(event){
+    $(".sort-dropdown").click(function(event){
         event.preventDefault();
         if($("#dropdownMenuButton").val() != $(this).text()){
           $("#dropdownMenuButton").text($(this).text());
