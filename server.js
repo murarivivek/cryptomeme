@@ -130,7 +130,17 @@ app.get('/usermemes/:name', function(req,res){
 	  		res.json(err);
 	  	}
 	  	else{
-	  		res.json(rows);
+	  		if(rows.length == 0){
+	  			MemeModel.getAllMemesByRandom(function(err,rows){
+	  				if(err){
+	  					res.json(err);
+	  				}else{
+	  					res.json(rows);
+	  				}
+	  			});
+	  		}else{
+	  			res.json(rows);
+	  		}
 	  	}
 	});
 })

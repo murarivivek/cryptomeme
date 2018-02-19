@@ -51,6 +51,9 @@ getRankingActive:function(callback){
 getUserDetails:function(wallet_address, callback){
 	return db.query("select username, user.wallet_address, memes_owned, worth, count(ownership_transfer_log.to_address) as transaction_count from (Select username, user.wallet_address, count(meme_ownership.meme_id) as memes_owned, sum(meme_ownership.price)  as worth from user left join meme_ownership on user.wallet_address=meme_ownership.wallet_address where user.wallet_address=? group by user.wallet_address) as user left join ownership_transfer_log on user.wallet_address=ownership_transfer_log.to_address group by user.wallet_address",[wallet_address],callback);
 },
+getAllMemesByRandom:function(callback){
+	return db.query("Select id, name, image_url, price,username, transactions_count, user.wallet_address from meme inner join meme_ownership on meme_ownership.meme_id=meme.id inner join user on user.wallet_address=meme_ownership.wallet_address order by rand() limit 0,16", callback);
+},
 
 
 /*,
