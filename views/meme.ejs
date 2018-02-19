@@ -50,7 +50,7 @@
                     </tr>
                     <tr>
                         <td>Owner</td>
-                        <td><a href="/user/<%= meme[0].wallet_address %>" ><%= meme[0].username %></a></td>
+                        <td><a href="/user/<%= meme[0].wallet_address %>" ><%= (meme[0].username==meme[0].wallet_address)?meme[0].username.substring(0,8):meme[0].username %></a></td>
                     </tr>
                     <tr>
                         <td>No. of Transactions</td>

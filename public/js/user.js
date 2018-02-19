@@ -43,7 +43,8 @@ var User = {
         memeTemplate.find('.card-title').text(memes[i].name);
         memeTemplate.find('img').attr('src', memes[i].image_url);
         if(memes[i].username){
-                  var ownerDisplay = memes[i].username.length>20?memes[i].username.substring(0,20)+'...':memes[i].username;
+                  ownerDisplay = (memes[i].username==memes[i].wallet_address)?memes[i].username.substring(0,8):memes[i].username;
+                  ownerDisplay = ownerDisplay.length>20?ownerDisplay.substring(0,20)+'...':ownerDisplay
                 }else{
                   ownerDisplay = "NoOwner";
                 }
