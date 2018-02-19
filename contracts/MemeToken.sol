@@ -300,7 +300,7 @@ contract MemeToken is ERC721 {
     _transfer(oldOwner, newOwner, _tokenId);
   }
 
-  /// @param _owner The owner whose celebrity tokens we are interested in.
+  /// @param _owner The owner whose meme tokens we are interested in.
   /// @dev This method MUST NEVER be called by smart contract code. First, it's fairly
   ///  expensive (it walks the entire Memes array looking for memes belonging to owner),
   ///  but it also returns a dynamic array, which is only supported for web3 calls, and
