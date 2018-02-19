@@ -9,7 +9,7 @@ var MyAppModel = mysqlModel.createPool({
 var connection=mysql.createPool({ 
 	host:'localhost',
 	user:'root',
- 	password:'pg02032016',
+ 	password:'',
 	database:'cryptomeme'
 });
 /*exports.connection = connection;

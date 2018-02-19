@@ -696,10 +696,77 @@ footer .copyright p a:focus {
   display: block;
 }
 
-.nickname{right: 0px;left: auto;background: transparent;border: 0px;padding-top: 2px;}
+.nickname{
+  right: 0px;
+  left: auto;
+  background: transparent;
+  border: 0px;
+  padding-top: 2px;
+}
 
 .nickname > a{
   background-color: #ddd;
   border-radius: 5px;
   border: 2px solid #ddd;
 }
+
+
+.faq{
+  margin-top:10px;
+}
+
+
+
+.faq  .tab-content.panels-faq {
+  padding: 0;
+  border: 0;
+}
+
+.faq  .panel.panel-help {
+  box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
+  padding-bottom: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: #fff;
+  margin: 0 0 16px;
+}
+  .faq  a[href^="#"],
+  .faq  a[href^="#"]:hover,
+  .faq  a[href^="#"]:focus {
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+  }
+.faq   .panel-heading {
+    background-color: #7f610b87;
+    padding: 0 16px;
+    line-height: 48px;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    color: rgba(0,0,0,.87);
+  }
+.faq   h2 {      
+      margin: 0;
+      padding: 14px 0 14px;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 20px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+.faq   .panel-body {
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    border-radius: 2px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    margin-top: 0;
+  }
+  .faq    p {
+      margin: 0 0 16px;
+      padding: 0 16px;
+      &:last-of-type {
+        margin: 0;
+      }
+    }
+  
