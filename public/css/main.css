@@ -692,7 +692,7 @@ footer .copyright p a:focus {
   /* border: 1px solid #ffc40c; */
 }
 
-.dropdown:hover>.dropdown-menu {
+.address-toggle:hover>.nickname {
   display: block;
 }
 
@@ -738,7 +738,7 @@ footer .copyright p a:focus {
     text-decoration: none;
   }
 .faq   .panel-heading {
-    background-color: #7f610b87;
+    background-color: #e6e6e6;
     padding: 0 16px;
     line-height: 48px;
     border-top-right-radius: 2px;
