@@ -66,9 +66,13 @@ app.get('/user/:id', function (req, res) {
 
 app.get('/meme/:id',function(req,res){
 	MemeModel.getMemeById(req.params.id,function(err, result){
-		res.render('meme',{
-			meme : result
-		});
+		if(result.length==0){
+			res.redirect('/market');
+		}else{
+			res.render('meme',{
+				meme : result
+			});
+		}
 	});
 })
 
