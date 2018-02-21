@@ -10,6 +10,7 @@
   "license": "ISC",
   "devDependencies": {},
   "dependencies": {
+    "ajax-request": "^1.2.3",
     "mysql": "^2.15.0",
     "node-cron": "^1.2.1",
     "truffle-contract": "^3.0.2"

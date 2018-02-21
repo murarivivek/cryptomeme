@@ -3,34 +3,34 @@ var mysql = require('mysql');
 var Web3 = require("web3");
 var contract = require("truffle-contract");
 var cron = require('node-cron');
+var request = require('ajax-request');
+var SolidityCoder = require("web3/lib/solidity/coder.js");
 
 // Configuration
 var config = require("./db.json");
-var memeTokenConfig = require("../build/contracts/MemeToken.json");
-var web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
+var web3Provider = new Web3.providers.HttpProvider('https://mainnet.infura.io');
 web3 = new Web3(web3Provider);
 
 // DB Connection pool
 var pool  = mysql.createPool(config);
 
-// Solidity contract
-var MemeContract = contract(memeTokenConfig);
-MemeContract.setProvider(web3Provider);
 
+//Constants
+var ETHERSCAN_URL = "https://api.etherscan.io/api";
+var ETHERSCAN_API_KEY = "7T9F5K1KWAMRZ5CIEZP4VQ88EQTP6XJ2I8";
+var CONTRACT_ADDRESS = "0x0d623823d2AA4540f335bb926447dc582DC5bD64";
+var BIRTH_TOPIC = "0xb3b0cf861f168bcdb275c69da97b2543631552ba562628aa3c7317d4a6089ef2";
+var TRANSFER_TOPIC = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+var TOKENSOLD_TOPIC = "0x008201e7bcbf010c2c07de59d6e97cb7e3cf67a46125c49cbc89b9d2cde1f48f";
 
-var memeInstance;
+scheduleCronJob();
 
-populateInstance();
-
-function populateInstance() {
+function scheduleCronJob() {
   try {
-      MemeContract.deployed().then(function(instance) {
-        memeInstance = instance;
         // Schedule cron every minute.
         cron.schedule('* * * * *', populateDBData);
-    });
   } catch(err){
-      console.log("****** populateInstance Error : " + new Date());
+      console.log("****** scheduleCronJob Error : " + new Date());
       console.log(err);
   }
 }
@@ -142,18 +142,32 @@ function getLastBlockNumberError(err){
 
 // Gets current block number
 function getCurrentBlockNumber(memePrices, lastBlockNumber, successCallBack, errorCallBack){
-    web3.eth.getBlockNumber(function(error, newBlockNumber){
-      if(error){
+    request({
+      url: ETHERSCAN_URL,
+      method: 'GET',
+      data: {
+        module : 'proxy',
+        action : 'eth_blockNumber',
+        apikey : ETHERSCAN_API_KEY
+      }
+    }, function(err, res, body) {
+      try {
+        var response = JSON.parse(body);
+        if(err){
+          errorCallBack(err);
+        } else {
+          var newBlockNumber = web3.toDecimal(response.result);
+          successCallBack(memePrices, lastBlockNumber, newBlockNumber);
+        }
+      } catch(error){
         errorCallBack(error);
-      } else {
-        successCallBack(memePrices, lastBlockNumber, newBlockNumber);
       }
     });
 }
 
 
 function getCurrentBlockNumberSuccess(memePrices, lastBlockNumber, newBlockNumber){
-    getTransferEvents(memePrices, lastBlockNumber, newBlockNumber, getTransferEventsSuccess, getTransferEventsError);
+    getEvents(memePrices, lastBlockNumber, newBlockNumber, getEventsSuccess, getEventsError);
 }
 
 function getCurrentBlockNumberError(err){
@@ -162,89 +176,106 @@ function getCurrentBlockNumberError(err){
 }
 
 
-// get Transfer events from last processed block till latest
-function getTransferEvents(memePrices, lastBlockNumber, newBlockNumber, successCallBack, errorCallBack){
-  try {
-        var transferEvents = memeInstance.Transfer({event: "Transfer"},{fromBlock: lastBlockNumber, toBlock: newBlockNumber});
-        transferEvents.get(function(error, results){
+// get events from last processed block till latest
+function getEvents(memePrices, lastBlockNumber, newBlockNumber, successCallBack, errorCallBack){
+        request({
+          url: ETHERSCAN_URL,
+          method: 'GET',
+          data: {
+            module : 'logs',
+            action : 'getLogs',
+            fromBlock : lastBlockNumber,
+            toBlock : newBlockNumber,
+            address : CONTRACT_ADDRESS,
+            apikey : ETHERSCAN_API_KEY
+          }
+        }, function(err, res, body) {
           try {
-            var events = [];
-            var latestTransactions = {};
-            for (var i = 0; i < results.length; i++) {
-              var event = [];
-              event.push(results[i].transactionHash);
-              var tokenId = results[i].args.tokenId;
-              var memeId = web3.toDecimal(tokenId);
-              event.push(memeId);
-              event.push(results[i].args.from);
-              event.push(results[i].args.to);
-              event.push(results[i].blockNumber);
-              var txn = {};
-              txn.transactionHash = results[i].transactionHash;
-              txn.owner = results[i].args.to;
-              txn.price = memePrices[memeId];
-              latestTransactions[memeId] = txn;
-              events.push(event);
-            }
-            successCallBack(events, lastBlockNumber, newBlockNumber, latestTransactions);
-          } catch(err){
+            var response = JSON.parse(body);
+            if(err){
               errorCallBack(err);
+            } else {
+              var lastProcessedBlock = lastBlockNumber;
+              var latestTransactions = {};
+              var events = [];
+              var births = [];
+              var result = response.result;
+              for (var i = 0; i < result.length; i++) {
+                var topic = result[i].topics[0];
+                lastProcessedBlock = web3.toDecimal(result[i].blockNumber);
+                //Birth events
+                if(topic === BIRTH_TOPIC){
+                  var event = processBirthEvent(result[i], memePrices);
+                  births.push(event);
+                }
+                //Transfer events
+                else if(topic === TRANSFER_TOPIC){
+                  var event = processTransferEvent(result[i], latestTransactions, memePrices);
+                  events.push(event);
+                }
+                //TokenSold events
+                if(topic === TOKENSOLD_TOPIC){
+                  processTokenSoldEvent(result[i], latestTransactions);
+                }
+              }
+              if(result.length > 999){
+                newBlockNumber = lastProcessedBlock;
+              }
+              successCallBack(births, events, newBlockNumber, latestTransactions);
+            }
+          } catch(error){
+            errorCallBack(error);
           }
         });
-  } catch(err){
-      errorCallBack(err);
-  }
 }
 
-function getTransferEventsSuccess(events, lastBlockNumber, newBlockNumber, latestTransactions){
+function getEventsSuccess(births, events, newBlockNumber, latestTransactions){
+    if(births.length > 0) {
+      createMemes(births, events, newBlockNumber, latestTransactions, createMemesSuccess, createMemesError);
+    } else if(events.length > 0) {
+      updateTransfers(events, newBlockNumber, latestTransactions, updateTransfersSuccess, updateTransfersError)
+    } else {
+      updateBlockNumber(newBlockNumber, updateBlockNumberSuccess, updateBlockNumberError);
+    }
+
+}
+
+function getEventsError(err){
+  console.log("****** getEventsError : " + new Date());
+  console.log(err);
+}
+
+
+// create memes based on birth events
+function createMemes(births, events, newBlockNumber, latestTransactions, successCallBack, errorCallBack){
+  pool.getConnection(function(err, connection) {
+      if(err) {
+        errorCallBack(err);
+      } else {
+        connection.query('INSERT INTO meme (id, name, created_user, last_modified_user, status) VALUES  ? ON DUPLICATE KEY UPDATE id = VALUES(id)', [births], function (error, results, fields) {
+          connection.release();
+          if (error) {
+            errorCallBack(error);
+          } else {
+            successCallBack(events, newBlockNumber, latestTransactions);
+          }
+        });
+      }
+  });
+}
+
+function createMemesSuccess(events, newBlockNumber, latestTransactions){
     if(events.length > 0) {
-      getTokenSoldEvents(events, lastBlockNumber, newBlockNumber, latestTransactions, getTokenSoldEventsSuccess, getTokenSoldEventsError);
+      updateTransfers(events, newBlockNumber, latestTransactions, updateTransfersSuccess, updateTransfersError)
     } else {
       updateBlockNumber(newBlockNumber, updateBlockNumberSuccess, updateBlockNumberError);
     }
 }
 
-function getTransferEventsError(err){
-  console.log("****** getTransferEventsError : " + new Date());
+function createMemesError(err){
+  console.log("****** createMemesError : " + new Date());
   console.log(err);
 }
-
-
-// get TokenSold events from last processed block till latest
-function getTokenSoldEvents(events, lastBlockNumber, newBlockNumber, latestTransactions, successCallBack, errorCallBack){
-  try {
-        var soldEvents = memeInstance.TokenSold({event: "TokenSold"},{fromBlock: lastBlockNumber, toBlock: newBlockNumber});
-        soldEvents.get(function(error, results){
-          try {
-            for (var i = 0; i < results.length; i++) {
-              var tokenId = results[i].args.tokenId;
-              var memeId = web3.toDecimal(tokenId);
-              var priceEth = results[i].args.newPrice;
-              var price = web3.fromWei(priceEth, "ether").toNumber();;
-              if (latestTransactions.hasOwnProperty(memeId)) {
-                latestTransactions[memeId].price = price;
-              }
-            }
-            successCallBack(events, newBlockNumber, latestTransactions);
-          } catch(err){
-              errorCallBack(err);
-          }
-        });
-  } catch(err){
-      errorCallBack(err);
-  }
-}
-
-function getTokenSoldEventsSuccess(events, newBlockNumber, latestTransactions) {
-    updateTransfers(events, newBlockNumber, latestTransactions, updateTransfersSuccess, updateTransfersError)
-}
-
-function getTokenSoldEventsError(err){
-  console.log("****** getTokenSoldEventsError : " + new Date());
-  console.log(err);
-}
-
-
 
 // Updates ownership_transfer_log table
 function updateTransfers(events, newBlockNumber, latestTransactions, successCallBack, errorCallBack){
@@ -422,4 +453,56 @@ function updateBlockNumberError(err){
 }
 
 
+
+function processBirthEvent(row, memePrices){
+    var data = SolidityCoder.decodeParams(["uint256", "string", "address"], row.data.slice(2));
+    var event = [];
+    var tokenId = data[0];
+    var memeId = web3.toDecimal(tokenId);
+    event.push(memeId);
+    event.push(data[1]);
+    event.push('cron-job');
+    event.push('cron-job');
+    event.push(0);
+    if (!memePrices.hasOwnProperty(memeId)) {
+      memePrices[memeId] = 0.001;
+    }
+    return event;
+}
+
+
+
+function processTransferEvent(row, latestTransactions, memePrices){
+    var data = SolidityCoder.decodeParams(["address", "address", "uint256"], row.data.slice(2));
+    var event = [];
+    event.push(row.transactionHash);
+    var tokenId = data[2];
+    var memeId = web3.toDecimal(tokenId);
+    event.push(memeId);
+    event.push(data[0]);
+    event.push(data[1]);
+    var blockNum = web3.toDecimal(row.blockNumber);
+    event.push(blockNum);
+    var txn = {};
+    txn.price = memePrices[memeId];
+    if (latestTransactions.hasOwnProperty(memeId)) {
+      txn = latestTransactions[memeId];
+    }
+    txn.transactionHash = row.transactionHash;
+    txn.owner = data[1];
+    latestTransactions[memeId] = txn;
+    return event;
+}
+
+
+function processTokenSoldEvent(row, latestTransactions){
+    var data = SolidityCoder.decodeParams(["uint256", "uint256", "uint256", "address", "address", "string"], row.data.slice(2));
+    var tokenId = data[0];
+    var memeId = web3.toDecimal(tokenId);
+    var priceEth = data[2];
+    var price = web3.fromWei(priceEth, "ether").toNumber();;
+    if (latestTransactions.hasOwnProperty(memeId)) {
+      latestTransactions[memeId].price = price;
+    }
+}
 
