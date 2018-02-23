@@ -50,7 +50,7 @@ var User = {
                 }
         memeTemplate.find('.meme-link').attr('href', '/meme/'+memes[i].id);
         memeTemplate.find('.owner').html('<a href="/user/'+memes[i].wallet_address+'">'+ownerDisplay+'</a>');
-        memeTemplate.find('.price').attr('data-trueval', memes[i].price+0.0000001);
+        memeTemplate.find('.price').attr('data-trueval', memes[i].price+0.000001);
         var price = (memes[i].price+ 0.00000049).toFixed(6);
         memeTemplate.find('.price').text(price);
         memeTemplate.find('.pet-location').text(memes[i].location);
