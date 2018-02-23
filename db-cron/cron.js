@@ -28,7 +28,8 @@ scheduleCronJob();
 function scheduleCronJob() {
   try {
         // Schedule cron every minute.
-        cron.schedule('* * * * *', populateDBData);
+        //cron.schedule('* * * * *', populateDBData);
+        setInterval(populateDBData,30*1000);
   } catch(err){
       console.log("****** scheduleCronJob Error : " + new Date());
       console.log(err);
