@@ -33,7 +33,7 @@
             <h1 ><%= meme[0].name %> Meme</h1>
              <div class="buy-button col mb-4 mt-4">
 
-                <button class="btn btn-block btn-primary btn-buy" type="button" meme-id="<%= meme[0].id %>" meme-price="<%= meme[0].price+0.000001 %>">Own the Meme
+                <button class="btn btn-block btn-primary btn-buy" type="button" meme-id="<%= meme[0].id %>" meme-price="<%= (meme[0].price+0.000001).toFixed(10) %>">Own the Meme
                 </button>
               </div>
 
