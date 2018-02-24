@@ -88,7 +88,7 @@ app.get('/api/meme/:id', function(req, res){
 		}else{
 			responseJson =  JSON.parse(JSON.stringify(result));
 			if(responseJson[0])
-			responseJson[0].image_url = "https://cryptomeme.lol"+responseJson[0].image_url;
+			responseJson[0].image_url = "https://cryptomemes.lol"+responseJson[0].image_url;
 
 		}
 			  			res.send(responseJson);
