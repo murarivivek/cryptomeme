@@ -2,8 +2,29 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Crypto Memes">
+
+    <meta name="keywords" content="ETH, Ethereum, Investment game, Ethereum game, Crypto Memes, Buy Memes, Blockchain Game" />
+        <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@cryptomemeshq" />
+    <meta name="twitter:creator" content="@cryptomemeshq" />
+
+
+
+    <% if (locals.meme) { %>
+    <meta property="og:image" content="http://cryptomemes.lol<%= meme[0].image_url %>" />
+    <meta property="og:title" content="Buy <%= meme[0].name %> meme on Crypto Memes" />
+        <meta property="og:description" content="Buy Memes on Blockchain. On CryptoMemes.LOL, you can buy <%= meme[0].name %> meme. Your transaction is secured by blockchain and everybody wins." />
+            <meta name="description" content="Buy Memes on Blockchain. On CryptoMemes.LOL, you can buy <%= meme[0].name %> meme. Your transaction is secured by blockchain and everybody wins.">
+
+
+    <% } else { %>
+       <meta property="og:image" content="http://snappyimages.nextwavesrl.netdna-cdn.com/img/a6a85ee6c5155cb9387ecd01a0548bf3.png" />
+       <meta property="og:title" content="CryptoMemes.LOL - Buy Memes on Blockchain" />
+        <meta property="og:description" content="Buy Memes on Blockchain. On CryptoMemes.LOL, you can buy memes. Your transaction is secured by blockchain and everybody wins." />
+            <meta name="description" content="Buy Memes on Blockchain. On CryptoMemes.LOL, you can buy memes. Your transaction is secured by blockchain and everybody wins.">
+
+    <% } %>
 
     <title>Crypto Meme Shop</title>
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
