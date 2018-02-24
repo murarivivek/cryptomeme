@@ -80,6 +80,23 @@ app.listen(3000, function () {
   console.log('Crypto Meme app listening on port 3000!')
 })
 
+app.get('/api/meme/:id', function(req, res){
+		 	responseJson = {}
+		MemeModel.getMemeById(req.params.id,function(err, result){
+		if(err){
+			responseJson.meme =  JSON.parse(JSON.stringify(err));
+		}else{
+			responseJson =  JSON.parse(JSON.stringify(result));
+			if(responseJson[0])
+			responseJson[0].image_url = "https://cryptomeme.lol"+responseJson[0].image_url;
+
+		}
+			  			res.send(responseJson);
+	});
+
+
+})
+
 app.get('/memes', function(req, res){
  	pageNum = req.query.page;
  	sortBy = req.query.sortBy;
