@@ -161,6 +161,10 @@ app.get('/contact', function (req, res) {
   res.render('contact');
 })
 
+app.get('/suggestmeme', function (req, res) {
+  res.render('suggestmeme');
+})
+
 app.get('/terms-of-service', function (req, res) {
   res.render('terms-of-service');
 })
